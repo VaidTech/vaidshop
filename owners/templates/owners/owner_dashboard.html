@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+
+{% block content %}
+<div class="wrapper">
+
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        {% include 'dashboard/logo-header.html' %}
+        <!-- Navbar  -->
+        {% include 'dashboard/navbar.html' %}
+    </div>
+
+    <!-- Sidebar -->
+    {% include 'dashboard/sidebar.html' %}
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                {% block dashboard_content %}
+                    {% include 'dashboard/card.html' %}
+                {% endblock dashboard_content %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

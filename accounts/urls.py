@@ -1,0 +1,17 @@
+from django.urls import path 
+
+from .views import owner_register_view, login_view, dashboard_view
+
+
+app_name = 'accounts'
+
+
+urlpatterns = [
+    path('register/owner/', owner_register_view, name='owner-register'),
+    path('login/', login_view, name='login'),
+    path('dashboard/', dashboard_view, name='dashboard'),
+]
+
+
+
+

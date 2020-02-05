@@ -1,0 +1,28 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#email, #id_password1, #username, #id_password2, #login-password, #id_mobile_number, #id_date_of_birth{
+    width: 265px;
+    box-shadow: 0 0 4px white;
+    border-radius: 4px;
+    border: 1px solid #bdbfb9;
+    height: 30px;
+    line-height: 0px;
+    margin: 0;
+}
+#image, #id_profile_photo, #id_gender{
+    width: 265px;
+    box-shadow: 0 0 4px white;
+    border-radius: 4px;
+    border: 1px solid #bdbfb9;
+    height: 40px;
+    margin: 0;
+}
+
+
+
+
+

@@ -1,0 +1,26 @@
+{% extends 'owners/owner_dashboard.html' %}
+{% block title %}Employee Create{% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block dashboard_content %}
+<div class="employee mt-4 mb-4">
+    <div class="card m-auto" style="width: 37rem;">
+        <div class="card-body ml-5">
+            <h1>Employee Registration</h1><hr>
+            <form action="{% url 'employees:create' %}" method='POST' enctype="multipart/form-data" id="employee-registered">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {{ employee_form|crispy }}
+                <br>
+                <input type="submit" value="Add Employee" class="btn btn-primary">
+            </form>
+        </div>
+      </div>
+</div>
+{% endblock dashboard_content %}
+
+
+
+
+
+
