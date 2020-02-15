@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'employees',
     'owners',
     'shops',
+    'products',
+    'core',
 
     'crispy_forms',
-    
 ]
 
 MIDDLEWARE = [

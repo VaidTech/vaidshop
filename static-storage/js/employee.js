@@ -1,49 +1,6 @@
 
 $(function(){
-    var mobile_number = $("#id_mobile_number");
-    var date_of_birth = $("#id_date_of_birth");
-    var gender = $("#id_gender");
     
-
-    mobile_number.focus(function(){
-        $(this).css({
-            'box-shadow': '0 0 4px #E4AF2C',
-            'border': '1px solid #6FA7F8'
-        })
-    });
-    mobile_number.blur(function(){
-        $(this).css({
-            'box-shadow': '0 0 4px white',
-            'border': '1px solid #bdbfb9'
-        })
-    });
-
-    date_of_birth.focus(function(){
-        $(this).css({
-            'box-shadow': '0 0 4px #E4AF2C',
-            'border': '1px solid #6FA7F8'
-        })
-    });
-    date_of_birth.blur(function(){
-        $(this).css({
-            'box-shadow': '0 0 4px white',
-            'border': '1px solid #bdbfb9'
-        })
-    });
-
-    gender.focus(function(){
-        $(this).css({
-            'box-shadow': '0 0 4px #E4AF2C',
-            'border': '1px solid #6FA7F8'
-        })
-    });
-    gender.blur(function(){
-        $(this).css({
-            'box-shadow': '0 0 4px white',
-            'border': '1px solid #bdbfb9'
-        })
-    });
-
     // employee list 
     $("#employee-registered-modal").submit(function(event){
         var this_ = $(this)
@@ -74,7 +31,6 @@ $(function(){
                     }else{
                         $("#emp-modal-error-date_of_birth").html("")
                     }
-                    
                     if(data.error_dict.form_errors.password2){
                         password = data.error_dict.form_errors.password2
                         if(password.length == 1){
@@ -97,7 +53,7 @@ $(function(){
                         }
                         
                     }else{
-                        $("#emp-modal-error-pass1").html("")
+                            $("#emp-modal-error-pass1").html("")
                             $("#emp-modal-error-pass2").html("")
                             $("#emp-modal-error-pass2").html("")
                             $("#emp-modal-error-pass2").html("")
@@ -105,8 +61,13 @@ $(function(){
         
                 }
                 else{
+                    $("#emp-modal-error-pass1").html("")
+                    $("#emp-modal-error-pass2").html("")
+                    $("#emp-modal-error-pass2").html("")
+                    $("#emp-modal-error-pass2").html("")
+                    $("#emp-modal-error-date_of_birth").html("")
+                    $("#emp-modal-error-username").html("")
                     $("#emp-register-success-msg").html('<div class="alert alert-success msg" role="alert">Successfully Registration Complted!</div>')
-
                     setTimeout(function(){
                         document.location.href = empListUrl
                     }, 1500)
@@ -119,7 +80,103 @@ $(function(){
         event.preventDefault()
     })
 
-})
+    // employee update modal form load
+    var loadForm = function (event) {
+    var btn = $(this);
+    $.ajax({
+      url: btn.attr("data-url"),
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#employeeUpdateModal").modal("show");
+      },
+      success: function (data) {
+        $("#employeeUpdateModal .update-modal-content").html(data.html_form); 
+      }
+    });
+  };
+  $("#employee-table").on("click", ".update-employee", loadForm);
+
+  // employee update modal form save
+  $("#employeeUpdateModal").submit(function(event){
+    var this_ = $(this)
+    var employeeUpdateForm = this_.find("form")
+    var employeeUpdateUrl = employeeUpdateForm.attr("action")
+    $.ajax({
+        url: employeeUpdateUrl,
+        method: 'post',
+        data: employeeUpdateForm.serialize(),
+        success: function(data){
+            if(data.errors || data.username_error){
+                swal("Opps!", "Invalid, Please chech your data.", {
+                    icon : "error",
+                    buttons: {
+                        confirm: {
+                            className : 'btn btn-warning'
+                        }
+                    },
+                });
+                if(data.errors){
+                    if(data.errors.employee_errors.date_of_birth){
+                        $("#employee-update-errors1").html(data.errors.employee_errors.date_of_birth)
+                    }else{
+                        $("#employee-update-errors1").html("")
+                    }
+                    if(data.errors.employee_user_errors.username){
+                        $("#employee-update-errors3").html(data.errors.employee_user_errors.username)
+                    }else{
+                        $("#employee-update-errors3").html("")
+                    }
+                }
+                if(data.username_error){
+                    $("#employee-update-errors2").html(data.username_error.error)
+                }else{
+                    $("#employee-update-errors2").html("")
+                }
+            }
+            else{
+                swal("Good job!", "Employee is updated.", {
+                    icon : "success",
+                    buttons: {
+                        confirm: {
+                            className : 'btn btn-success'
+                        }
+                    },
+                }).then(function(){
+                    window.location.href = empListUrl
+                });
+
+                $("#employeeUpdateModal").modal("hide");
+                
+            }
+        },
+    });
+    event.preventDefault()
+  });
+
+    // employee delete 
+    $(".delete-employee").click(function(){
+        var btn = $(this)
+        $.ajax({
+            url: btn.attr("data-url"),
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function(){
+                $("#employeeDeleteModal").modal("show");
+            },
+            success: function(data){
+                $("#employeeDeleteModal .delete-modal-content").html(data.html_form)
+            }
+
+        })
+        
+    });
+
+
+
+
+
+});
 
 
 

@@ -2,23 +2,22 @@
 {% block title %}Employee List {% endblock title %}
 {% load crispy_forms_tags %}
 {% block dashboard_content %}
-<!-- Button -->
+<!-- Employee Create Button -->
 <div class="d-flex">
-	<button class="btn btn-primary btn-round ml-auto mb-3" data-toggle="modal" data-target="#addRowModal">
+	<button class="btn btn-info btn-round ml-auto mb-3" data-toggle="modal" data-target="#employeeCreate">
 		<i class="fa fa-plus"></i>
 		Add Employee
 	</button>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Employee Create Modal -->
+<div class="modal fade" id="employeeCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content" style="width: 50rem;">
+		<div class="modal-content" id="create-modal-content">
 			<div class="modal-header no-bd">
                 <span class="fw-light m-auto">
-                    <h1>Employee Registration</h1><hr>
+                    <h1 id="create-modal-header">Employee Registration</h1>
 				</span>
-				
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -57,9 +56,9 @@
 	</div>
 </div>
 
-<!-- Table -->
 
-<table class="table table-head-bg-primary">
+<!-- Employee table  -->
+<table class="table table-bordered table-head-bg-info table-bordered-bd-info" id="employee-table">
 	<thead>
 		<tr>
 			<th scope="col">#</th>
@@ -70,27 +69,75 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for emp in owner.employee_set.all %}
+			{% for emp in page_obj.object_list %}
 		<tr>
-			<td>{{ forloop.counter }}</td>
+			<td>{{ emp.id }}</td>
 			<td>{{ emp.user.username }}</td>
 			<td>{{ emp.mobile_number }}</td>
             <td>{{ emp.gender }}</td>
             <td> 
-                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-simple-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> 
-                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-simple-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button>
+				<button type="button" class="btn btn-link update-employee" data-toggle="modal" data-target="#employeeUpdateModal" data-url="{% url 'employees:update' id=emp.id %}">
+				  <i class="fa fa-edit"></i>
+				</button>
+
+				<button type="button" data-url="{% url 'employees:delete' id=emp.id %}"class="btn btn-link delete-employee" data-toggle="modal" data-target="#employeeDeleteModal">
+  					<i class="fas fa-trash-alt"></i>
+				</button>
+				   
             </td>
 		</tr>
 		{% endfor %}
+		
+
 	</tbody>
 </table>
 
 
+<!-- Employee Update Modal -->
+<div class="modal fade" id="employeeUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content update-modal-content">
 
-    
+    </div>
+  </div>
+</div>
 
 
-    
+<!-- Employee Delete Modal -->
+<div class="modal fade" id="employeeDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content delete-modal-content">
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- paginator  -->
+<nav aria-label="...">
+	<ul class="pagination mb-0">
+		<li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+			<a class="page-link" href="?page=1">First</a>
+		</li>
+		<li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+			<a class="page-link" href="?page={{ page_obj.start_index|add:-1 }}">Previous</a>
+		</li>
+		{% for num in page_obj.paginator.page_range %} 
+		{% if page_obj.number == num %}
+		<li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+		{% elif num > page_obj.number|add:"-3" and  num < page_obj.number|add:"3" %}
+		<li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+		{% endif %}
+		{% endfor %}
+		<li class="page-item {% if not page_obj.has_next %}disabled{% endif %} ">
+			<a class="page-link" href="?page={{ page_obj.start_index|add:1 }}">next</a>
+		</li>
+		<li class="page-item {% if  page_obj.paginator.num_pages ==  page_obj.start_index %}disabled{% endif %}">
+			<a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last</a>
+		</li>
+	</ul>
+</nav>
+
 {% endblock dashboard_content %}
 
 

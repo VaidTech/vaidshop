@@ -1,11 +1,8 @@
 from django.contrib import admin
 
-from .models import Shop, Product, ProductAddToShop
+from .models import Shop, ShopProduct
 
 
 admin.site.register(Shop)
-
-admin.site.register(Product)
-
-admin.site.register(ProductAddToShop)
+admin.site.register(ShopProduct)
 
