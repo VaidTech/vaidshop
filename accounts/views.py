@@ -6,25 +6,29 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import UserForm, OwnerRegisterForm, LoginForm
 from owners.models import Owner
+from accounts.models import User 
 
-User = get_user_model()
+# User = get_user_model()
 
 def owner_register_view(request):
     if request.method == 'POST':
-        form = UserForm(data=request.POST)
-        o_r_form = OwnerRegisterForm(request.POST, request.FILES)
-        if form.is_valid() and o_r_form.is_valid():
-            user = form.save()
-            instance = o_r_form.save(commit=False)
-            instance.user = user 
+        user_form = UserForm(data=request.POST)
+        owner_register_form = OwnerRegisterForm(request.POST, request.FILES)
+        if user_form.is_valid() and owner_register_form.is_valid():
+            user_instance = user_form.save()
+            instance = owner_register_form.save(commit=False)
+            instance.user = user_instance
+            instance.user.is_owner = True 
             instance.save()
+            instance.user.save()
+            messages.success(request, 'Successfully owner registered.')
             return redirect('accounts:login')
     else:
-        form = UserForm()
-        o_r_form = OwnerRegisterForm()
+        user_form = UserForm()
+        owner_register_form = OwnerRegisterForm()
     context = {
-        'form': form,
-        'o_r_form': o_r_form
+        'form': user_form,
+        'o_r_form': owner_register_form
     }
     return render(request, 'accounts/owner-register.html', context)
 
@@ -52,15 +56,15 @@ def login_view(request):
         return JsonResponse(json_data)
     return render(request, 'accounts/login.html', context)
 
+@login_required()
+def logout_view(request):
+    logout(request)
+    return redirect("accounts:login")
+
 
 @login_required(login_url="/accounts/login/")
 def dashboard_view(request):
-    obj = User.objects.get(id=request.user.id)
-    is_owner = Owner.objects.filter(user=obj).exists()
-    context = {}
-    if is_owner:
-        return render(request, 'owners/owner_dashboard.html', context)
-    return render(request, 'employees/employee_dashboard.html', context)
+    return render(request, 'accounts/dashboard.html', {})
     
 
 

@@ -10,7 +10,7 @@
                 <div class="register-error"></div>
 
                 <!-- register form  -->
-                <form action="{% url 'accounts:owner-register' %}" method='post' class="owner-register">
+                <form action="{% url 'accounts:owner-register' %}" method='post' class="owner-register" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form|crispy }}
                     {{ o_r_form|crispy }}

@@ -1,4 +1,4 @@
-{% extends 'owners/owner_dashboard.html' %}
+{% extends 'accounts/dashboard.html' %}
 {% block title %}Employee Create{% endblock title %}
 {% load crispy_forms_tags %}
 
@@ -6,8 +6,8 @@
 <div class="employee mt-4 mb-4">
     <div class="card m-auto" style="width: 37rem;">
         <div class="card-body ml-5">
-            <h1>Employee Registration</h1><hr>
-            <form action="{% url 'employees:create' %}" method='POST' enctype="multipart/form-data" id="employee-registered">
+            <h1 style="margin-left:80px;margin-bottom:30px;font-family: 'Courgette', cursive;color: #0392FA;">Employee Registration</h1>
+            <form action="{% url 'employees:create' %}" method='POST' enctype='multipart/form-data' id="employee-registered">
                 {% csrf_token %}
                 {{ form|crispy }}
                 {{ employee_form|crispy }}

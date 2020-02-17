@@ -1,14 +1,26 @@
 /*general*/
-/*
-    ======modal====
+
+   /* ======modal====
     background-color: #F4FCFE;
+
     =====h1-header====
     font-family: 'Courgette', cursive;
     color: #0392FA;
-*/
+
+    ===button===
+    font-family: 'Sriracha', cursive; 
+
+    */
+
 *{
     margin: 0;
     padding: 0;
+}
+.btn{
+    font-family: 'Sriracha', cursive;
+}
+h5{
+   font-family: 'Sriracha', cursive;
 }
 /*password checker*/
 #week, #strong, #hard{
@@ -22,7 +34,7 @@
     margin-left: -42px;
 }
 /*form general*/
-#email, #id_password1, #username, #id_password2, #login-password, #id_mobile_number, #id_date_of_birth{
+#email, #id_password1, #username, #id_password2, #login-password, #id_mobile_number, #id_date_of_birth, .shop-name, .product-title, .product-price, .product-stock-quantity{
     width: 265px;
     box-shadow: 0 0 4px white;
     border-radius: 4px;
@@ -31,7 +43,7 @@
     line-height: 0px;
     margin: 0;
 }
-#image, #id_profile_photo, #id_gender{
+#image, #id_profile_photo, #id_gender, .shop-address, .shop-image, .product-image, .product-stock-type, .product-shop-select{
     width: 265px;
     box-shadow: 0 0 4px white;
     border-radius: 4px;
@@ -39,11 +51,11 @@
     height: 40px;
     margin: 0;
 }
-#email:focus, #username:focus, #login-password:focus, #id_password2:focus, #id_password1:focus, #id_mobile_number:focus, #id_date_of_birth:focus, #id_gender:focus{
+#email:focus, #username:focus, #login-password:focus, #id_password2:focus, #id_password1:focus, #id_mobile_number:focus, #id_date_of_birth:focus, #id_gender:focus, .shop-name:focus, .shop-address:focus{
     box-shadow: 0 0 4px #E4AF2C;
     border: 1px solid #8E44AD;
 }
-#email:focus, #username:blur, #login-password:focus, #id_password2:focus, #id_password1:focus, #id_mobile_number:focus, #id_date_of_birth:focus, #id_gender:focus{
+#email:blur, #username:blur, #login-password:blur, #id_password2:blur, #id_password1:blur, #id_mobile_number:blur, #id_date_of_birth:blur, #id_gender:blur{
     box-shadow: 0 0 4px white;
     border: 1px solid #bdbfb9;
 }
@@ -80,6 +92,62 @@
 .delete-object-content{
     margin-left: 80px;
 }
+
+/*shop */
+    .shop-header{
+        font-family: 'Courgette', cursive;
+        color: #0392FA;
+        text-align: center;
+        margin-left: -45px;
+    }
+    .shop-description{
+        width: 270px;
+    }
+    #shop-create-modal-content{
+        width: 400px;
+        background-color: #FEEFEF;
+        margin-top: 80px;
+        margin-left: 50px;
+    }
+    /*shop detail*/
+    .shop-detail{
+        font-family: 'Sriracha', cursive;
+    }
+    .shop-detail-title{
+       font-size: 20px;
+       font-weight: 700;
+    }
+    .shop-detail-title-address{
+        line-height: 18px;
+        font-family: 'Sriracha', cursive;
+    }
+    .shop-detail-owner{
+        font-size: 15px;
+    }
+    .shop-detail-description{
+        color: grey;
+        line-height: 17px;
+        margin-top: 13px;
+    }
+    .shop-detail-product-list-title{
+        text-decoration: none;
+        color:grey;
+        font-weight: 500;
+        font-family: 'Sriracha', cursive;
+    }
+
+
+/*product */
+.product-create-header{
+    font-family: 'Courgette', cursive;
+    color: #0392FA;
+    text-align: center;
+    margin-left: -45px;
+}
+.product-description{
+    width: 270px;
+}
+
 
 
 

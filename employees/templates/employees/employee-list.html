@@ -4,7 +4,7 @@
 {% block dashboard_content %}
 <!-- Employee Create Button -->
 <div class="d-flex">
-	<button class="btn btn-info btn-round ml-auto mb-3" data-toggle="modal" data-target="#employeeCreate">
+	<button class="btn btn-warning btn-round ml-auto mb-3" data-toggle="modal" data-target="#employeeCreate">
 		<i class="fa fa-plus"></i>
 		Add Employee
 	</button>
@@ -35,7 +35,7 @@
 				<p id="emp-modal-error-pass4"></p>
 			</div>
 
-            <form action="{% url 'employees:create' %}" method='POST' enctype="multipart/form-data" id="employee-registered-modal">
+            <form action="{% url 'employees:create' %}" method='POST' enctype="multipart/form-data" id="employee-registered-modal-form">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-6">

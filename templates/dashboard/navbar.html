@@ -1,5 +1,5 @@
 <nav class="navbar navbar-header navbar-expand-lg">
-				
+    <!-- Search  Form -->
     <div class="container-fluid">
         <div class="collapse" id="search-nav">
             <form class="navbar-left navbar-form nav-search mr-md-3">
@@ -18,31 +18,60 @@
         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
-                    {% if request.user.owner %}
+                    {% if request.user.is_owner %}
                     <div class="avatar-sm">
+                        {% if request.user.owner.profile_photo %}
                         <img src="{{ request.user.owner.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
+                        {% else %}
+                        Profile
+                        {% endif %}
                     </div>
                     {% else %}
                     <div class="avatar-sm">
+                        {% if request.user.employee.profile_photo %}
                         <img src="{{ request.user.employee.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
+                        {% else %}
+                        Profile
+                        {% endif %}
                     </div>
                     {% endif %}
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <li>
                         <div class="user-box">
-                            {% if request.user.owner %}
+                            {% if request.user.is_owner %}
                             <div class="avatar-lg">
+                                {% if request.user.owner.profile_photo %}
                                 <img src="{{ request.user.owner.profile_photo.url }}" alt="image profile" class="avatar-img rounded">
+                                {% else %}
+                                profile photo
+                                {% endif %}
                             </div>
                             {% else %}
                             <div class="avatar-lg">
+                                {% if request.user.employee.profile_photo %}
                                 <img src="{{ request.user.employee.profile_photo.url }}" alt="image profile" class="avatar-img rounded">
+                                {% else %}
+                                profile photo
+                                {% endif %}
                             </div>
                             {% endif %}
+
                             <div class="u-text">
-                                <h4>Hizrian</h4>
-                                <p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                {% if request.user.is_owner %}
+                                    <h4>{{ request.user.owner }}</h4>
+                                    {% if requeset.user.email %}
+                                        <p class="text-muted">{{ request.user.email }}</p>
+                                    {% endif %}
+                                    <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+
+                                {% else %}
+                                    <h4>{{ request.user.employee }}</h4>
+                                    {% if requeset.user.owner.email %}
+                                        <p class="text-muted">{{ request.user.email }}</p>
+                                    {% endif %}
+                                    <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                {% endif %}
                             </div>
                         </div>
                     </li>
@@ -59,6 +88,5 @@
                 </ul>
             </li>
         </ul>
-
     </div>
 </nav>

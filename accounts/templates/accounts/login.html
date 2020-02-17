@@ -4,11 +4,26 @@
 
 {% block content %}
 <div class="mt-4">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+           <!-- register success messages  -->
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %} 
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <!-- login form -->
     <div class="card m-auto" style="width: 20rem;">
         <div class="card-body">
            <!-- Error message  -->
         <div class="login-error-message"></div>
-    
         <!-- login form  -->
         <form action="{% url 'accounts:login' %}" method='POST' id="signIn-form">
             {% csrf_token %}

@@ -1,0 +1,23 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee Create{% endblock title %}
+
+{% block dashboard_content %}
+<div class="employee mt-4 mb-4">
+    <div class="card m-auto" style="width: 37rem;">
+        <div class="card-body ml-5">
+            <h1 class="shop-header">Shop Update</h1>
+            <form action="{% url 'shops:update' id=shop.id %}" method='POST' id="shop-update">
+                {% csrf_token %}
+                {{ shop_update_form.as_p }}
+                <br>
+                <input type="submit" value="Update" class="btn btn-primary">
+            </form>
+        </div>
+      </div>
+</div>
+{% endblock dashboard_content %}
+
+
+
+
+

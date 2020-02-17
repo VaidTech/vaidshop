@@ -1,22 +1,35 @@
 
 $(function(){
-    
+
     // employee list 
-    $("#employee-registered-modal").submit(function(event){
-        var this_ = $(this)
-        var empRMUrl = this_.attr('action')
-        var empRMData = this_.serialize()
+    $("#employee-registered-modal-form").submit(function(event){
+        var employeeRegisterForm = $(this)
+        var empRMUrl = employeeRegisterForm.attr('action')
+        var empRMData = new FormData(employeeRegisterForm[0])
+        var employeeRegisterModalEnctype = employeeRegisterForm.attr('enctype')
         $.ajax({
             url: empRMUrl,
-            method: 'POST',
+            type: 'post',
+            enctype: employeeRegisterModalEnctype,
             data : empRMData,
+            async: true,
+            cache: false,
+            processData: false,
+            contentType: false,
             success: function(data){
                 if (data.error_dict){
                     var EmpMErr = $("#emp-modal-error")
                     var username 
                     var password
                     if(data.error_dict){
-                        alert("Opps! Invalid data.")
+                        swal("Opps!", "Invalid, Please check your data.", {
+                        icon : "error",
+                        buttons: {
+                            confirm: {
+                                    className : 'btn btn-warning'
+                                }
+                            }
+                         });
                     }
                     if (data.error_dict.form_errors.username){
                         username = data.error_dict.form_errors.username
@@ -76,9 +89,9 @@ $(function(){
                 console.log("Error")
             }
         })
-
         event.preventDefault()
     })
+
 
     // employee update modal form load
     var loadForm = function (event) {
@@ -102,13 +115,20 @@ $(function(){
     var this_ = $(this)
     var employeeUpdateForm = this_.find("form")
     var employeeUpdateUrl = employeeUpdateForm.attr("action")
+    var employeeUpdateFormEnctype = employeeUpdateForm.attr("enctype")
+    var employeeFormData = new FormData(employeeUpdateForm[0])
     $.ajax({
         url: employeeUpdateUrl,
         method: 'post',
-        data: employeeUpdateForm.serialize(),
+        data: employeeFormData,                               
+        enctype: employeeUpdateFormEnctype,
+        async: true,
+        cache: false,
+        processData: false,
+        contentType: false,
         success: function(data){
             if(data.errors || data.username_error){
-                swal("Opps!", "Invalid, Please chech your data.", {
+                swal("Opps!", "Invalid, Please check your data.", {
                     icon : "error",
                     buttons: {
                         confirm: {
@@ -116,6 +136,7 @@ $(function(){
                         }
                     },
                 });
+
                 if(data.errors){
                     if(data.errors.employee_errors.date_of_birth){
                         $("#employee-update-errors1").html(data.errors.employee_errors.date_of_birth)
@@ -145,9 +166,8 @@ $(function(){
                 }).then(function(){
                     window.location.href = empListUrl
                 });
-
-                $("#employeeUpdateModal").modal("hide");
                 
+                $("#employeeUpdateModal").modal("hide");
             }
         },
     });
@@ -177,10 +197,6 @@ $(function(){
 
 
 });
-
-
-
-
 
 
 

@@ -1,0 +1,79 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Shop List{% endblock title %}
+{% load widget_tweaks %}
+
+{% block dashboard_content %}
+<!-- shop create modal button -->
+<div class="d-flex">
+	<button class="btn btn-danger btn-round ml-auto mb-3" data-toggle="modal" data-target="#shopCreate">
+		<i class="fa fa-plus"></i>
+		Add Shop
+	</button>
+</div>
+
+
+<!-- shop create modal form  -->
+<div class="modal fade" id="shopCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" id="shop-create-modal-content">
+			<div class="modal-header no-bd">
+                <span class="fw-light m-auto">
+                    <h1 id="create-modal-header">Shop Create</h1>
+				</span>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body ml-4">
+			<div class="shop-create-error mb-3" style="color: red;"></div>
+
+            <form action="{% url 'shops:create' %}" method='POST' enctype="multipart/form-data" id="shop-create-form">
+                {% csrf_token %}
+                <div class="shop-name-section">
+                    <label for="{{ shop_form.name.label }}">{{ shop_form.name.label }}*</label>
+                    {% render_field shop_form.name class="form-control shop-name" placeholder=shop_form.name.label %}
+                </div>
+                <div class="shop-address-section mt-3">
+                    <label for="{{ shop_form.name.label }}">{{ shop_form.address.label }}*</label>
+                    {% render_field shop_form.address class="form-control shop-address" placeholder=shop_form.address.label %}
+                </div>
+                <div class="shop-description-section mt-3">
+                    <label for="{{ shop_form.name.label }}">{{ shop_form.description.label }}*</label>
+                    {% render_field shop_form.description class="form-control shop-description" placeholder=shop_form.description.label rows="4" %}
+                </div>
+                <div class="shop-image-section mt-3">
+                    <label for="{{ shop_form.name.label }}">{{ shop_form.image.label }}*</label>
+                    {% render_field shop_form.image class="form-control shop-image" %}
+                </div>
+                <button type="submit" id="addRowButton" class="btn btn-primary mt-5">Create Shop</button>
+                <button type="button" class="btn btn-danger mt-5" data-dismiss="modal">Close</button>
+            </form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- shop list  -->
+<div class="shop-list">
+	<div class="row">
+		{% for shop in shops %}
+		<div class="col-md-3">
+			<div class="card" style="width: 15rem;">
+				<a href="{% url 'shops:detail' id=shop.id %}"><img class="card-img-top" src="{{ shop.image.url }}" alt="Card image cap"></a>
+				<div class="card-body">
+					<h5 class="card-title mb-2"><a href="{% url 'shops:detail' id=shop.id %}" style="font-family: 'Sriracha', cursive;">{{ shop.name }}</a></h5>
+					<p class="card-text">{{ shop.description|truncatewords:10 }}</p>
+				</div>
+			</div>
+		</div>	
+		{% endfor %}	
+	</div>
+</div>
+{% endblock dashboard_content %}
+
+
+
+
+
+

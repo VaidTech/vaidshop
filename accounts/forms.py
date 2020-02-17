@@ -6,8 +6,9 @@ import re
 
 from owners.models import Owner
 from employees.models import Employee
+from accounts.models import User 
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class UserForm(UserCreationForm):
@@ -36,7 +37,7 @@ class UserUpdateForm(forms.Form):
                                                                 }
                                                             )
                                                         )
-    email       = forms.EmailField(required=False, widget=forms.TextInput(attrs={
+    email       = forms.EmailField(required=False, widget=forms.EmailInput(attrs={
                                                                     'placeholder': 'Email Address', 
                                                                     'id': 'email'
                                                                 }

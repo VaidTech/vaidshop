@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'core',
 
     'crispy_forms',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,8 @@ MIDDLEWARE = [
 
     'accounts.middleware.DashboardMiddleWare'
 ]
+
+AUTH_USER_MODEL = "accounts.User"
 
 ROOT_URLCONF = 'shop_management.urls'
 
@@ -141,7 +144,7 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+LOGIN_URL = "/accounts/login"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

@@ -1,0 +1,53 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee Create{% endblock title %}
+{% load widget_tweaks %}
+
+{% block dashboard_content %}
+<div class="product mt-4 mb-4">
+    <div class="card m-auto" style="width: 28rem;">
+        <div class="card-body ml-5">
+            <h1 class="product-create-header mb-5">Add Product To Shop</h1>
+            <div class="product-create-error mb-3" style="color: red;"></div>
+            <form action="{% url 'products:create' %}" method='POST' id="product-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="product-title-section">
+                    <label for="{{ product_form.name.label }}">{{ product_form.title.label }}*</label>
+                    {% render_field product_form.title class="form-control product-title" placeholder=product_form.title.label %}
+                </div>
+                <div class="product-price-section mt-3">
+                    <label for="{{ product_form.price.label }}">{{ product_form.price.label }}*</label>
+                    {% render_field product_form.price class="form-control product-price" placeholder=product_form.price.label %}
+                </div>
+                <div class="product-stock-type-section mt-3">
+                    <label for="{{ stock_form.stock_type.label }}">{{ stock_form.stock_type.label }}*</label>
+                    {% render_field stock_form.stock_type class="form-control product-stock-type" placeholder=stock_form.stock_type.label %}
+                </div>
+                <div class="product-stock-quantity-section mt-3">
+                    <label for="{{ stock_form.stock_quantity.label }}">{{ stock_form.stock_quantity.label }}*</label>
+                    {% render_field stock_form.stock_quantity class="form-control product-stock-quantity" placeholder=stock_form.stock_quantity.label rows="4" %}
+                </div>
+                <div class="product-shop-select-section mt-3">
+                    <label for="{{ product_form.shop.label }}">{{ product_form.shop.label }}*</label>
+                    {% render_field product_form.shop class="form-control product-shop-select" placeholder=stock_form.shop.label %}
+                </div>
+                <div class="product-description-section mt-3">
+                    <label for="{{ product_form.description.label }}">{{ product_form.description.label }}*</label>
+                    {% render_field product_form.description class="form-control product-description" placeholder=product_form.description.label rows="4" %}
+                </div>
+                <div class="product-image-section mt-3">
+                    <label for="{{ product_form.image.label }}">{{ product_form.image.label }}*</label>
+                    {% render_field product_form.image class="form-control product-image" %}
+                </div>
+                <br>
+                <button type="submit" class="btn btn-warning product-add-btn">Add</button>
+            </form>
+        </div>
+      </div>
+</div>
+{% endblock dashboard_content %}
+
+
+
+
+
+

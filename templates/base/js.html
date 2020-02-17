@@ -17,8 +17,14 @@
 <!-- owner-register js  -->
 <script src="{% static 'js/owner.js' %}"></script>
 
-<!-- owner-register js  -->
+<!-- employee js  -->
 <script src="{% static 'js/employee.js' %}"></script>
+
+<!-- product js  -->
+<script src="{% static 'js/product.js' %}"></script>
+
+<!-- shop js  -->
+<script src="{% static 'js/shop.js' %}"></script>
 
 <!-- django secure csrf ajax  -->
 <script src="{% static 'js/csrf.ajax.js' %}"></script>
@@ -46,6 +52,7 @@
 
     <script>
         var empListUrl = "{% url 'employees:list' %}"
+        var shopListUrl = "{% url 'shops:list' %}"
     </script>
 
     <!-- jQuery UI -->

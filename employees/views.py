@@ -5,20 +5,23 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 from django.urls import reverse 
 from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 from .forms import EmployeeForm
 from .models import Employee
 from accounts.forms import UserForm, UserUpdateForm
 from owners.models import Owner
+from accounts.models import User 
 
-User = get_user_model()
+# User = get_user_model()
 
 
+@login_required()
 def employee_create_view(request):
     error_dict = {}
     if request.method == 'POST':
-        employee_form = EmployeeForm(request.POST,request.FILES)
+        employee_form = EmployeeForm(request.POST, request.FILES)
         form = UserForm(request.POST)
         if employee_form.is_valid() and form.is_valid():
             user = form.save()
@@ -46,6 +49,7 @@ def employee_create_view(request):
     return render(request, 'employees/create-employee.html', context)
 
 
+@login_required()
 def employee_update_view(request, id):  
     data = dict()
     employee_instance = Employee.objects.get(id=id)
@@ -55,16 +59,17 @@ def employee_update_view(request, id):
         if employee_form.is_valid() and user_form.is_valid():
             username = user_form.cleaned_data.get("username")
             email = user_form.cleaned_data.get("email")
-            employee_qs = Employee.objects.filter(user__username=username).exclude(id=id).exists()
-            if employee_qs:
+            user_qs = User.objects.filter(username=username).exclude(id=employee_instance.user.id).exists()
+            if user_qs:
                 data['username_error'] = {"error": "Username is already taken!"}
-                # raise ValidationError("Username is already taken!")
                 return JsonResponse(data)
-            instance_user = employee_instance.user
-            instance_user.username = username
-            if email:
-                instance_user.email = email 
-            instance_user.save()
+            else:
+                instance_user = employee_instance.user
+                instance_user.username = username
+                if email:
+                    instance_user.email = email 
+                instance_user.save()
+
             employee_form.save()
             # data['employee_list'] = render_to_string('employees/employee-list.html', {
             #     'instance': employee_instance
@@ -86,10 +91,10 @@ def employee_update_view(request, id):
     return render(request, 'employees/employee-update.html', context)
 
 
+@login_required()
 def employee_delete_view(request, id):
     data = dict()
     is_delete = request.GET.get('delete')
-    print(is_delete)
     try:
         employee_instance = Employee.objects.get(id=id)
     except:
@@ -110,12 +115,12 @@ def employee_delete_view(request, id):
     return render(request, 'employees/employee-delete.html', context)
 
 
+@login_required()
 def employee_list_view(request):
     form = UserForm()
     employee_form = EmployeeForm()
     owner = Owner.objects.get(user=request.user)
     employee_qs = owner.employees.all()
-
     page_number = request.GET.get('page')
     paginator = Paginator(employee_qs, 10)
     page_obj = paginator.get_page(page_number) 

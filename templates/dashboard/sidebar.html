@@ -3,56 +3,81 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-4">
-                    {% if request.user.owner.profile_photo %}
-                    <div class="avatar avatar-online">
-                        <img src="{{ request.user.owner.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
-                    </div>
+                    {% if request.user.is_owner %}
+                        {% if request.user.owner.profile_photo %}
+                        <div class="avatar avatar-online">
+                            <img src="{{ request.user.owner.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="avatar avatar-online">
+                            <img src="{{ request.user.employee.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
+                        </div>
                     {% endif %}
                 </div>
                 <div class="info">
-                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                        <span>
-                            <span style="font-size: 16px;font-weight: 400;">{{ request.user.username }}</span> 
-                            <span class="user-level">Owner</span>
-                            <!-- <span class="caret"></span> -->
-                        </span>
-                    </a>
-                    <!-- <div class="clearfix"></div> -->
+                    {% if request.user.is_owner %}
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <span>
+                                <span style="font-size: 16px;font-weight: 400;">{{ request.user.username }}</span> 
+                                <span class="user-level">Owner</span>
+                                <!-- <span class="caret"></span> -->
+                            </span>
+                        </a>
+                        <!-- <div class="clearfix"></div> -->
 
-                    <!-- <div class="collapse in" id="collapseExample">
-                        <ul class="nav">
-                            <li>
-                                <a href="#profile">
-                                    <span class="link-collapse">My Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#edit">
-                                    <span class="link-collapse">Edit Profile</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div> -->
+                        <!-- <div class="collapse in" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a href="#profile">
+                                        <span class="link-collapse">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#edit">
+                                        <span class="link-collapse">Edit Profile</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> -->
+                    {% else %}
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <span>
+                                <span style="font-size: 16px;font-weight: 400;">{{ request.user.username }}</span> 
+                                <span class="user-level">Employee</span>
+                                <!-- <span class="caret"></span> -->
+                            </span>
+                        </a>
+                        <!-- <div class="clearfix"></div> -->
+
+                        <!-- <div class="collapse in" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a href="#profile">
+                                        <span class="link-collapse">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#edit">
+                                        <span class="link-collapse">Edit Profile</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> -->
+                    {% endif %}
                 </div>
             </div>
             
             <ul class="nav">
-                <li class="nav-item active">
+                <li class="nav-item {% if '/accounts/dashboard' in request.path %}active{% endif %}">
                     <a href="/accounts/dashboard/">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
-                        <span class="badge badge-count">5</span>
+                        <!-- <span class="badge badge-count">5</span> -->
                     </a>
                 </li>
-
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Components</h4>
-                </li>
-
-                <li class="nav-item">
+                {% if request.user.is_owner %}
+                <li class="nav-item {% if 'shop' in request.path %}active{% endif %}">
                     <a data-toggle="collapse" href="#base">
                         <i class="fas fa-layer-group"></i>
                         <p>Shop</p>
@@ -61,12 +86,12 @@
                     <div class="collapse" id="base">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
+                                <a href="{% url 'shops:create' %}">
                                     <span class="sub-item">Shop Create</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{% url 'shops:list' %}">
                                     <span class="sub-item">Shop List</span>
                                 </a>
                             </li>
@@ -74,7 +99,7 @@
                     </div>
                 </li>
                 
-                <li class="nav-item">
+                <li class="nav-item {% if 'employee' in request.path %}active{% endif %}">
                     <a data-toggle="collapse" href="#employee">
                         <i class="fas fa-table"></i>
                         <p>Employee</p>
@@ -96,22 +121,31 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item {% if 'product' in request.path %}active{% endif %}">
                     <a data-toggle="collapse" href="#products">
                         <i class="far fa-chart-bar"></i>
                         <p>Product</p>
                         <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="products">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{% url 'products:create' %}">
+                                    <span class="sub-item">Product Add</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="nav-item">
                     <a href="">
                         <i class="fas fa-desktop"></i>
                         <p>Order</p>
-                        <span class="badge badge-count badge-success">4</span>
+                        <span class="badge badge-count badge-success">0</span>
                     </a>
                 </li>
-
+                {% endif %}
             </ul>
         </div>
     </div>
