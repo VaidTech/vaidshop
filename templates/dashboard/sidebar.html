@@ -3,69 +3,41 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-4">
-                    {% if request.user.is_owner %}
-                        {% if request.user.owner.profile_photo %}
-                        <div class="avatar avatar-online">
-                            <img src="{{ request.user.owner.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
-                        </div>
+                {% if request.user.is_owner and request.user.owner.profile_photo %}
+                <div class="avatar avatar-online">
+                    <img src="{{ request.user.owner.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
+                </div>
+                {% endif %}
+                {% if request.user.employee and request.user.employee.profile_photo %}
+                <div class="avatar avatar-online">
+                    <img src="{{ request.user.employee.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
+                </div>
+                {% endif %}
+            </div>
+            <div class="info">
+                <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                    <span>
+                        <span style="font-size: 16px;font-weight: 400;">{{ request.user.username }}</span>
+                        {% if request.user.is_owner %}
+                        <p>Owner</p>
+                        {% else %}
+                        <p>Employee</p>
                         {% endif %}
-                    {% else %}
-                        <div class="avatar avatar-online">
-                            <img src="{{ request.user.employee.profile_photo.url }}" alt="..." class="avatar-img rounded-circle">
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="info">
-                    {% if request.user.is_owner %}
-                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                            <span>
-                                <span style="font-size: 16px;font-weight: 400;">{{ request.user.username }}</span> 
-                                <span class="user-level">Owner</span>
-                                <!-- <span class="caret"></span> -->
-                            </span>
-                        </a>
-                        <!-- <div class="clearfix"></div> -->
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <div class="clearfix"></div>
 
-                        <!-- <div class="collapse in" id="collapseExample">
-                            <ul class="nav">
-                                <li>
-                                    <a href="#profile">
-                                        <span class="link-collapse">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#edit">
-                                        <span class="link-collapse">Edit Profile</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div> -->
-                    {% else %}
-                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                            <span>
-                                <span style="font-size: 16px;font-weight: 400;">{{ request.user.username }}</span> 
-                                <span class="user-level">Employee</span>
-                                <!-- <span class="caret"></span> -->
-                            </span>
-                        </a>
-                        <!-- <div class="clearfix"></div> -->
-
-                        <!-- <div class="collapse in" id="collapseExample">
-                            <ul class="nav">
-                                <li>
-                                    <a href="#profile">
-                                        <span class="link-collapse">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#edit">
-                                        <span class="link-collapse">Edit Profile</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div> -->
-                    {% endif %}
-                </div>
+                <div class="collapse in" id="collapseExample">
+                    <ul class="nav">
+                        <li>
+                            <a href="{% url 'accounts:profile' %}">
+                                <span class="link-collapse">My Profile</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>   
+            </div>
             </div>
             
             <ul class="nav">

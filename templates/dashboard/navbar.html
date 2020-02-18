@@ -63,27 +63,24 @@
                                     {% if requeset.user.email %}
                                         <p class="text-muted">{{ request.user.email }}</p>
                                     {% endif %}
-                                    <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
-
                                 {% else %}
                                     <h4>{{ request.user.employee }}</h4>
-                                    {% if requeset.user.owner.email %}
+                                    {% if requeset.user.email %}
                                         <p class="text-muted">{{ request.user.email }}</p>
                                     {% endif %}
-                                    <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                 {% endif %}
+                                <a href="{% url 'accounts:profile' %}" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                             </div>
                         </div>
                     </li>
                     <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">My Profile</a>
-                        <a class="dropdown-item" href="#">My Balance</a>
-                        <a class="dropdown-item" href="#">Inbox</a>
+                        <a class="dropdown-item" href="{% url 'accounts:profile' %}">My Profile</a>
+                        <!-- <a class="dropdown-item" href="#">My Balance</a> -->
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <!-- <a class="dropdown-item" href="#">Account Setting</a> -->
+                        <!-- <div class="dropdown-divider"></div> -->
+                        <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
                     </li>
                 </ul>
             </li>

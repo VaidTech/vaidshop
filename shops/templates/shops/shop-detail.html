@@ -3,35 +3,62 @@
 
 {% block dashboard_content %}
 <div class="shop-detail mt-4 mb-4">
+    <div class="buttn">
+        <!-- shop update modal button -->
+        <button type="button" id="shop-update-modal-btn"class="btn btn btn-outline-warning" data-toggle="modal" data-target="#shopUpdateModal" data-url="{% url 'shops:update' id=shop.id %}">Edit</button>
+        <!-- shop delete modal button -->
+        <button type="button" id="shop-delete-modal-btn"class="btn btn btn-outline-danger" data-toggle="modal" data-target="#shopDeleteModal" data-url="{% url 'shops:delete' id=shop.id %}">Delete</button>
+    </div>
+
+    <!-- shop update Modal -->
+    <div class="modal fade" id="shopUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="shop-update-modal-content" style="width: 400px;">
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- shop delete Modal -->
+    <div class="modal fade" id="shopDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="shop-delete-modal-content">
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- shop - detail  -->
     <div class="card m-auto" style="width: 37rem;">
         <div class="card-body ml-5">
             <div class="row">
-            	<div class="col-md-8">
+            	<div class="col-md-7">
                     <div class="shop-title">
                         <p class="shop-detail-title-address"> <span class="shop-detail-title">{{ shop.name }}</span><br> {{ shop.address }}</p>
                     </div>
                      <span class="shop-detail-owner">Owner:</span> {{ shop.owner }}
             		<p class="shop-detail-description">{{ shop.description }}</p>
-                    <button class="btn btn-danger btn-border">View All {{ shop.products.all.count }} Types Product</button>
+                    <a href="{% url 'shops:shop-products' id=shop.id %}" class="btn btn-danger btn-border">View All {{ shop.products.all.count }} Types Product</a>
             	</div>
-            	<div class="col-md-4">
-            		<img src="{{ shop.image.url }}" alt="..." class="img-thumbnail">
+            	<div class="col-md-5">
+            		<img src="{{ shop.image.url }}" alt="..." class="img-thumbnail" style="height:250px;">
             	</div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- top 5 products -->
 <div class="shop-product-top5" style="margin-top: 80px;">
        <hr>
         <div class="row">
             {% for product in top4_shop_product %}
             <div class="col-md-3">
                 <div class="card m-auto" style="width:13rem;">
-                   <a href=""><img src="{{ product.image.url }}" alt="..." class="img-thumbnail" style="width: 220px;height: 120px;"></a> 
+                   <a href="{% url 'products:detail' product.id %}"><img src="{{ product.image.url }}" alt="..." class="img-thumbnail" style="width: 220px;height: 120px;"></a> 
                     <div class="card-body">
                         <div class="product-list-title text-center">
-                            <a href="#"><h2 class="shop-detail-product-list-title text-center">{{ product.title }}</h2></a>
+                            <a href="{% url 'products:detail' product.id %}"><h2 class="shop-detail-product-list-title text-center">{{ product.title }}</h2></a>
                             <p>TK. {{ product.price|floatformat }}</p>
                             <p>Stock. {{ product.stock.stock_quantity|floatformat }} {{ product.stock.stock_type }}</p>
                         </div>
@@ -44,6 +71,11 @@
             {% endfor %}
         </div>
       </div>
+
+
+<script type="text/javascript">
+    var shopDetailUrl = "{% url 'shops:detail' id=shop.id %}"
+</script>    
 {% endblock dashboard_content %}
 
 

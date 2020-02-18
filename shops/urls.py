@@ -7,7 +7,8 @@ from .views import (
 	shop_list_view,
 	shop_update_view,
 	shop_detail_view,
-	shop_delete_view
+	shop_delete_view,
+	shop_product_list_view,
 	)
 
 
@@ -17,6 +18,7 @@ urlpatterns = [
 	path('list/', shop_list_view, name='list'),
 	path('detail/<int:id>/', shop_detail_view, name='detail'),
 	path('delete/<int:id>/', shop_delete_view, name='delete'),
+	path('products/<int:id>/', shop_product_list_view, name='shop-products')
 ]
 
 

@@ -1,21 +1,44 @@
-{% extends 'accounts/dashboard.html' %}
-{% block title %}Employee Create{% endblock title %}
 
-{% block dashboard_content %}
-<div class="employee mt-4 mb-4">
-    <div class="card m-auto" style="width: 37rem;">
-        <div class="card-body ml-5">
-            <h1 class="shop-header">Shop Update</h1>
-            <form action="{% url 'shops:update' id=shop.id %}" method='POST' id="shop-update">
-                {% csrf_token %}
-                {{ shop_update_form.as_p }}
-                <br>
-                <input type="submit" value="Update" class="btn btn-primary">
-            </form>
+{% load widget_tweaks %}
+<div class="shop-update" style="width: 24rem; margin-left: 20px;">
+    <div class="modal-header no-bd">
+            <h1 id="shop-update-modal-header">Shop Update</h1>
+            <button type="button" style="margin-right: 10px;" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-      </div>
+
+        <div class="shop-update-modal-error ml-3" style="color: red;"></div>
+    <form class="shop-update-form" action="{% url 'shops:update' id=shop.id %}" enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="shop-update-name-section mb-3">
+                <label for="{{ shop_update_form.name.label }}">{{ shop_update_form.name.label }}</label>
+                {% render_field shop_update_form.name class="form-control shop-name" placeholder=shop_update_form.name.label %}
+            </div>
+            <div class="shop-update-address-section mb-3">
+                <label for="{{ shop_update_form.address.label }}">{{ shop_update_form.address.label }}</label>
+                {% render_field shop_update_form.address class="form-control shop-address" placeholder=shop_update_form.address.label %}
+            </div>
+            <div class="shop-update-description-section mb-3">
+                <label for="{{ shop_update_form.description.label }}">{{ shop_update_form.description.label }}</label>
+                {% render_field shop_update_form.description class="form-control shop-description" placeholder=shop_update_form.description.label rows="4" %}
+            </div>
+            <div class="shop-update-image-section mb-3">
+                <label for="{{ shop_update_form.image.label }}">{{ shop_update_form.image.label }}</label>
+                {% render_field shop_update_form.image class="form-control shop-image" placeholder=shop_update_form.image.label %}
+            </div>
+            
+        </div>
+        <div class="shop-update-btn mb-5">
+            <button type="submit" class="btn btn-primary">Update Shop</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
 </div>
-{% endblock dashboard_content %}
+
+
+
+
 
 
 

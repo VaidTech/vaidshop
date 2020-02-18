@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 from .forms import ProductForm, StockForm 
+from products.models import Product
 
 
+@login_required()
 def product_create_view(request):
 	data = dict()
 	if request.method == 'POST':
@@ -27,7 +30,17 @@ def product_create_view(request):
 	return render(request, 'products/product-create.html', context)
 
 
-
+@login_required()
+def product_detail_view(request, id):
+	product_object = None
+	try:
+		product_object = Product.objects.get(id=id)
+	except:
+		pass
+	context = {
+		'product': product_object
+	}
+	return render(request, 'products/product-detail.html', context)
 
 
 

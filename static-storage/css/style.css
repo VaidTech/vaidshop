@@ -19,7 +19,7 @@
 .btn{
     font-family: 'Sriracha', cursive;
 }
-h5{
+h5, h2{
    font-family: 'Sriracha', cursive;
 }
 /*password checker*/
@@ -33,6 +33,7 @@ h5{
 #hard{
     margin-left: -42px;
 }
+
 /*form general*/
 #email, #id_password1, #username, #id_password2, #login-password, #id_mobile_number, #id_date_of_birth, .shop-name, .product-title, .product-price, .product-stock-quantity{
     width: 265px;
@@ -110,9 +111,6 @@ h5{
         margin-left: 50px;
     }
     /*shop detail*/
-    .shop-detail{
-        font-family: 'Sriracha', cursive;
-    }
     .shop-detail-title{
        font-size: 20px;
        font-weight: 700;
@@ -135,6 +133,11 @@ h5{
         font-weight: 500;
         font-family: 'Sriracha', cursive;
     }
+    #shop-update-modal-header{
+        font-family: 'Sriracha', cursive;
+        margin-left: 90px;
+        color: #0392FA;;
+    }
 
 
 /*product */
@@ -147,9 +150,22 @@ h5{
 .product-description{
     width: 270px;
 }
-
-
-
+.product-detail-title{
+    font-family: 'Courgette', cursive;
+    font-weight: 650;
+}
+.product-detail-price{
+    font-family: 'Courgette', cursive;
+    font-weight: 500;
+}
+.product-detail-stock{
+    font-family: 'Courgette', cursive;
+    font-weight: 500;
+}
+.product-detail-shop{
+    font-family: 'Courgette', cursive;
+    font-weight: 500;
+}
 
 
 

@@ -1,8 +1,15 @@
 
 {% block content %}
 <form action="{% url 'shops:delete' id=shop.id %}" >
-  Are you confirm to delete? {{ shop.name }}
-	<button type='submit' name='delete' value="1">Delete</button>
+  <div class="modal-header no-bd">
+  </div>
+  <div class="modal-body">
+  <h2>Are You Sure to Delete? {{ shop.name }} Shop</h2>
+  </div>
+  <div class="modal-footer no-bd">
+  	<button type="submit" name="delete" value="1" class="btn btn-outline-danger">Yes,I Am Sure</button>
+    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+  </div>
 </form>
 {% endblock content %}
 

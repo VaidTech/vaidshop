@@ -67,5 +67,10 @@ def dashboard_view(request):
     return render(request, 'accounts/dashboard.html', {})
     
 
+@login_required()
+def profile_view(request):
+    context = {
 
+    }
+    return render(request, 'accounts/profile.html', context)
 

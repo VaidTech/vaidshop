@@ -3,7 +3,6 @@ from django.db import models
 from owners.models import Owner
 
 
-
 class Shop(models.Model):
     owner       = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='shops')
     name        = models.CharField(max_length=50)

@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
+from django.template.loader import render_to_string
 
 from .forms import ShopForm 
 from owners.models import Owner 
@@ -17,8 +19,6 @@ def shop_create_view(request):
 		if shop_form.is_valid():
 			name = shop_form.cleaned_data.get('name')
 			shop_qs = Shop.objects.filter(name__iexact=name).exists()
-			print(shop_qs)
-			print(name)
 			if shop_qs:
 				data['errors'] = {'status': 'form-invalid', 'name_error': 'Shop name is already taken! Choose another name please.'}
 				return JsonResponse(data)
@@ -34,8 +34,10 @@ def shop_create_view(request):
 	}
 	return render(request, 'shops/shop-create.html', context)
 
+
 @login_required()
 def shop_update_view(request, id):
+	data = dict()
 	shop_instnace = Shop.objects.get(id=id)
 	if request.method == 'POST':
 		shop_update_form = ShopForm(request.POST, instance=shop_instnace)
@@ -43,15 +45,21 @@ def shop_update_view(request, id):
 			name = shop_update_form.cleaned_data['name']
 			shop_qs = Shop.objects.filter(name__iexact=name).exclude(id=id).exists()
 			if shop_qs:
-				raise ValidationError('Shop name is already exists!Please choose another name.')
-			shop_update_form.save()
+				data['errors'] = {'status': 'form-invalid', 'name_error': 'Shop name is already taken! Choose another name please.'}
+				return JsonResponse(data)
+			else:
+				shop_update_form.save()
 	else:
 		shop_update_form = ShopForm(instance=shop_instnace)
 	context = {
 		'shop_update_form': shop_update_form,
 		'shop': shop_instnace
 	}
+	if request.is_ajax():
+		data['html_form'] = render_to_string('shops/shop-update.html', context, request=request)
+		return JsonResponse(data)
 	return render(request, 'shops/shop-update.html', context)
+
 
 @login_required()
 def shop_list_view(request):
@@ -64,12 +72,20 @@ def shop_list_view(request):
 	}
 	return render(request, 'shops/shop-list.html', context)
 
+
 @login_required()
 def shop_detail_view(request, id):
-	shop_object = Shop.objects.get(id=id)
-	top4_shop_product = shop_object.products.all()[:4]
+	shop_object = None
+	top4_shop_product = None
+	try:
+		shop_object = Shop.objects.get(id=id)
+	except:
+		pass 
+	if shop_object is not None:
+		top4_shop_product = shop_object.products.all()[:4]
 	context = {'shop': shop_object, 'top4_shop_product': top4_shop_product}
 	return render(request, 'shops/shop-detail.html', context)
+
 
 @login_required()
 def shop_delete_view(request, id):
@@ -93,3 +109,32 @@ def shop_delete_view(request, id):
         data['html_form'] = render_to_string('shops/shop-delete.html', context, request=request)
         return JsonResponse(data)
     return render(request, 'shops/shop-delete.html', context)
+
+
+@login_required()
+def shop_product_list_view(request, id):
+	shop_object = None
+	shop_product = None
+	json = None
+	try:
+		shop_object = Shop.objects.get(id=id)
+	except: 
+		pass
+	if shop_object is not None:
+		shop_product = shop_object.products.all()
+	# 	json = serializers.serialize('json', shop_product)
+	# print(json)
+	context = {
+		"shop_product": shop_product,
+		"shop_object": shop_object
+	}
+	return render(request, 'products/shop-product-list.html', context)
+
+
+
+
+
+
+
+
+

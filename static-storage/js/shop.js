@@ -40,15 +40,82 @@ $(function(){
 		event.preventDefault()
 	});
 
-	// shop create modal 
-	$("#shop-create-modal-form").submit(function(event){
-		
+	// shop update modal load form
+	$("#shop-update-modal-btn").click(function(){
+		var btn = $(this)
+		$.ajax({
+			url: btn.attr("data-url"),
+			type: 'get',
+			dataType: 'json',
+			beforeSend: function(){
+				$("#shopUpdateModal").modal("show");
+			},
+			success: function(data){
+				$("#shop-update-modal-content").html(data.html_form)
+			},
+			error: function(){
+				console.log("error")
+			}
+		})
+	});
+
+	// shop save form modal 
+	$("#shopUpdateModal").submit(function(event){
+		var shopUpdateForm = $(this).find("form")
+		var shopUpdateFormUrl = shopUpdateForm.attr("action")
+		var shopUpdateFormEnctype = shopUpdateForm.attr("enctype")
+		var shopUpdateFormData = new FormData(shopUpdateForm[0])
+		$.ajax({
+			url: shopUpdateFormUrl,
+			type: 'post',
+			enctype: shopUpdateFormEnctype,
+			data: shopUpdateFormData,
+			async: true,
+			cache: false,
+			processData: false,
+			contentType: false,
+			success: function(data){
+				if(data.errors){
+					$(".shop-update-modal-error").html(data.errors.name_error)
+				}
+				else{
+					$(".shop-update-modal-error").html("")
+
+					swal("Well Done!", "Your Shop Is Updated.", {
+                    icon : "success",
+                    buttons: {
+                        confirm: {
+                            className : 'btn btn-success'
+                        }
+                    },
+		                }).then(function(){
+		                    window.location.href = shopDetailUrl;
+		               });
+					}
+			}
+		})
+
 		event.preventDefault()
 	});
 
+	// shop delete modal load form 
+	$("#shop-delete-modal-btn").click(function(){
+		var btn = $(this)
+		$.ajax({
+			url: btn.attr("data-url"),
+			type: 'get',
+			dataType: 'json',
+			beforeSend: function(){
+				$("#shopDeleteModal").modal('show')
+			},
+			success: function(data){
+				$("#shop-delete-modal-content").html(data.html_form)
+			}
+		})
+	})
 
 
-})
+});
 
 
 

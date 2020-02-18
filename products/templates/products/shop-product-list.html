@@ -1,0 +1,39 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Shop Products{% endblock title %}
+
+{% block dashboard_content %}
+<div class="card m-auto" style="width: 40rem;">
+  	<div class="card-body">
+  		<div class="row">
+  			<div class="col-md-9">
+  				<h2 style="color: purple;font-family: 'Sriracha', cursive;">{{ shop_object.name }}</h2>
+          <small>{{ shop_object.address }}</small>
+  			</div>
+  			<div class="col-md-3">
+  				<img src="{{ shop_object.image.url }}" alt="..." class="img-thumbnail" style="height: 60px;">
+  			</div>
+  		</div>
+  	</div>
+</div><hr>
+<div class="row">
+    {% for product in  shop_product %}
+    <div class="col-md-3 mt-5">
+        <div class="card m-auto" style="width:13rem;">
+           <a href="{% url 'products:detail' product.id %}"><img src="{{ product.image.url }}" alt="..." class="img-thumbnail" style="width: 220px;height: 120px;"></a> 
+            <div class="card-body">
+                <div class="product-list-title text-center">
+                    <a href="{% url 'products:detail' product.id %}"><h2 class="shop-detail-product-list-title text-center">{{ product.title }}</h2></a>
+                    <p>TK. {{ product.price|floatformat }}</p>
+                    <p>Stock. {{ product.stock.stock_quantity|floatformat }} {{ product.stock.stock_type }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>This shop has no product</p>
+    {% endfor %}
+</div>
+{% endblock dashboard_content %}
+
+
+
