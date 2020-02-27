@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from core.models import StockType
 from shops.models import Shop 
@@ -15,7 +16,7 @@ class Product(models.Model):
     created_at  = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.title)
 
 
 class Stock(models.Model):
@@ -26,6 +27,21 @@ class Stock(models.Model):
 
     def __str__(self):
         return str(f"{self.stock_quantity} {self.stock_type.name}")
+
+
+    def clean(self, *args, **kwargs):
+        data = super().clean(*args, **kwargs)
+        if self.stock_type.name == 'piece': 
+            stock_quantity = str(self.stock_quantity).split(".")[1]
+            if int(stock_quantity) > 0:
+                raise ValidationError("According to stock type given stock quantity is invalid.")
+        return data
+
+
+
+
+
+
 
 
 

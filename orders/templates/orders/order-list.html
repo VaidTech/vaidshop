@@ -1,0 +1,72 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Order List{% endblock title %}
+{% load mathfilters %}
+{% block dashboard_content %}
+<div class="order_list">
+	<table class="table table-bordered table-bordered-bd-warning mt-4">
+	<thead>
+		<tr>
+			<th scope="col">Order Id</th>
+			<th scope="col">Order Provider</th>
+			<th scope="col">Customer Name</th>
+			<th scope="col">Customer Phone</th>
+			<th scope="col">Customer Address</th>
+			<th scope="col">Product List</th>
+			<th scope="col">Amount</th>
+			<th scope="col">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for order in order_qs %}
+		<tr>
+		<td>{{ forloop.counter }}</td>
+		</small><td>{{ order.user }} (<small>{% if order.user.is_owner %}Owner{% else %}Employee{% endif %})</td>
+		<td>{{ order.customer.name }}</td>
+		<td>{{ order.customer.phone_number }}</td>
+		<td>{{ order.customer.address }}</td>
+		<td>
+			{% for order_product in order.order_products.all %}
+				<small>{{ order_product.product }}={{ order_product.quantity }} {{ order_product.product.stock.stock_type }}</small><br>
+			{% empty %}
+				product not found
+			{% endfor %}
+		</td>
+		<td>
+			{% for order_product in order.order_products.all %}
+				<small>{{ order_product.product }}-->{{ order_product.product.price|floatformat }}*{{ order_product.quantity }} {{ order_product.product.stock.stock_type }}={{ order_product.product.price|mul:order_product.quantity|floatformat }} Tk.
+			</small><br>
+			{% empty %}
+				product not found
+			{% endfor %}
+		</td>
+		<td>
+			<button type="button" class="btn btn-outline-primary order-delete-btn" data-url="{% url 'orders:delete' order.id %}" data-toggle="modal" data-target="#orderDeleteModal">
+			  Delete
+			</button>
+			<a href="{% url 'orders:update' order.id %}" class="btn btn-outline-danger order-update-btn" >Edit</a>
+		</td>
+		</tr>
+		{% empty %}
+			<p>Order Not Found</p>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+
+<!-- Order delete Modal -->
+<div class="modal fade" id="orderDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="order-delete-modal-content">
+      
+    </div>
+  </div>
+</div>
+{% endblock dashboard_content %}
+
+
+
+
+
+
+
+

@@ -167,7 +167,15 @@ h5, h2{
     font-weight: 500;
 }
 
-
+/*Order create*/
+.order-form-header{
+    font-family: 'Courgette', cursive;
+    text-align: center;
+    color: #0392FA;
+}
+#order-delete-modal-content{
+    margin-top: 200px;
+}
 
 
 

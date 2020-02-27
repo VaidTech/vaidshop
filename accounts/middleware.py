@@ -1,14 +1,14 @@
 from django.utils.deprecation import MiddlewareMixin
-from django.contrib.auth import get_user_model
+from orders.models import Order 
 
 
-
-User = get_user_model()
 
 class DashboardMiddleWare(MiddlewareMixin):
     def process_request(self, request):
-        request.owner = 's'
-        print(request.owner)
+    	if request.user.is_authenticated:
+        	order = Order.objects.filter(user=request.user)
+        	request.order_count = order.count()
+        
 
 
 

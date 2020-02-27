@@ -1,5 +1,5 @@
 
-{% block content %}
+
 <form class="employee-delete-form" action="{% url 'employees:delete' id=object.id %}">
 	<div class="modal-header no-bd">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -8,16 +8,16 @@
   </div>
   <div class="modal-body">
   	<div class="delete-object-content">
-  		<h1>Are You Confirm To Delete?</h1><br>
-  		<h2><span style="color: green;">{{ object.user.username }}</span></h2>
+  		<h1>Are You Confirm To Delete?</h1>
+  		<h2><span style="color: green;"> {{ object.user.username }}</span></h2>
   	</div>
    	 <div class="delete-button">
-   	 	<button type="submit" class="btn btn-danger" name="delete" value="1">Confirm</button>
-   	 	<button type="button" class="btn btn-secondary" data-dismiss="modal" name="cancel" value="0">Cancel</button>
+   	 	<button type="submit" class="btn btn-outline-danger" name="delete" value="1">Confirm</button>
+   	 	<button type="button" class="btn btn-outline-secondary" data-dismiss="modal" name="cancel" value="0">Cancel</button>
    	 </div>
   </div>
 </form>
-{% endblock content %}
+
 
 
 

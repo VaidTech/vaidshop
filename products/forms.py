@@ -20,3 +20,8 @@ class StockForm(forms.ModelForm):
 		fields = ('stock_type', 'stock_quantity')
 
 
+
+
+
+
+

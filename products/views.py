@@ -18,6 +18,9 @@ def product_create_view(request):
 			product_instance.stock = stock_instance
 			product_instance.save()
 			data['is_success'] = True
+			data['product_id'] = product_instance.id
+		else:
+			data['errors'] = {"stock_form_error": stock_form.errors}
 	else:
 		product_form = ProductForm(request.user)
 		stock_form = StockForm()

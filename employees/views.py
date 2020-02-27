@@ -6,7 +6,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse 
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from shops.decorators import employee_owner_entry_is_author
 
 from .forms import EmployeeForm
 from .models import Employee
@@ -14,10 +15,13 @@ from accounts.forms import UserForm, UserUpdateForm
 from owners.models import Owner
 from accounts.models import User 
 
-# User = get_user_model()
+
+def user_is_owner(user):
+    return user.is_owner
 
 
-@login_required()
+@login_required
+@user_passes_test(user_is_owner)
 def employee_create_view(request):
     error_dict = {}
     if request.method == 'POST':
@@ -49,7 +53,9 @@ def employee_create_view(request):
     return render(request, 'employees/create-employee.html', context)
 
 
-@login_required()
+@login_required
+@user_passes_test(user_is_owner)
+@employee_owner_entry_is_author
 def employee_update_view(request, id):  
     data = dict()
     employee_instance = Employee.objects.get(id=id)
@@ -91,7 +97,9 @@ def employee_update_view(request, id):
     return render(request, 'employees/employee-update.html', context)
 
 
-@login_required()
+@login_required
+@user_passes_test(user_is_owner)
+@employee_owner_entry_is_author
 def employee_delete_view(request, id):
     data = dict()
     is_delete = request.GET.get('delete')
@@ -115,7 +123,7 @@ def employee_delete_view(request, id):
     return render(request, 'employees/employee-delete.html', context)
 
 
-@login_required()
+@login_required
 def employee_list_view(request):
     form = UserForm()
     employee_form = EmployeeForm()

@@ -55,6 +55,44 @@ $(function(){
     })
 
 
+    // sidebar 
+     var currentUrl = window.location.href;
+     var currentUrl = currentUrl.split("/")
+     var currentUrl = currentUrl.slice(3, currentUrl.length)
+     var currentUrlPath = currentUrl.join("/")
+     // shop submenu show 
+     var shopMenu = $('.shop-menu');
+     if (currentUrlPath == "shops/create/" || currentUrlPath == "shops/list/"){
+        shopMenu.addClass('submenu')
+        $('.shopAreaExpended').attr("aria-expanded", 'true')
+        $(".shop-submenu").addClass("show")
+     }
+
+     // employee submenu show 
+     var employeeMenu = $('.employee-menu');
+     if (currentUrlPath == "employee/create/" || currentUrlPath == "employee/list/"){
+        employeeMenu.addClass('submenu')
+        $('.employeeAreaExpended').attr("aria-expanded", 'true')
+        $(".employee-submenu").addClass("show")
+     }
+
+     // product submenu show 
+     var productMenu = $('.product-menu');
+     if (currentUrlPath == "products/create/"){
+        productMenu.addClass('submenu')
+        $('.productAreaExpended').attr("aria-expanded", 'true')
+        $(".product-submenu").addClass("show")
+     }
+
+     // order submenu show 
+     var orderMenu = $('.order-menu');
+     if (currentUrlPath == "orders/create/" || currentUrlPath == "orders/list/"){
+        orderMenu.addClass('submenu')
+        $('.orderAreaExpended').attr("aria-expanded", 'true')
+        $(".order-submenu").addClass("show")
+     }
+
+
 
 });
 

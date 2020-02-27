@@ -34,6 +34,8 @@ def owner_register_view(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect("/accounts/dashboard/")
     is_login = False
     if request.method == 'POST':
         form = LoginForm(data=request.POST)

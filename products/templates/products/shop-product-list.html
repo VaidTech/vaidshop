@@ -23,7 +23,7 @@
             <div class="card-body">
                 <div class="product-list-title text-center">
                     <a href="{% url 'products:detail' product.id %}"><h2 class="shop-detail-product-list-title text-center">{{ product.title }}</h2></a>
-                    <p>TK. {{ product.price|floatformat }}</p>
+                    <span>TK. {{ product.price|floatformat }}</span>
                     <p>Stock. {{ product.stock.stock_quantity|floatformat }} {{ product.stock.stock_type }}</p>
                 </div>
             </div>
@@ -33,7 +33,13 @@
     <p>This shop has no product</p>
     {% endfor %}
 </div>
-{% endblock dashboard_content %}
 
+
+
+<script type="text/javascript">
+  shopProductListUrl = "{% url 'shops:shop-products' shop_object.id %}"
+</script>
+
+{% endblock dashboard_content %}
 
 

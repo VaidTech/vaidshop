@@ -48,21 +48,22 @@
                         <!-- <span class="badge badge-count">5</span> -->
                     </a>
                 </li>
+
                 {% if request.user.is_owner %}
-                <li class="nav-item {% if 'shop' in request.path %}active{% endif %}">
-                    <a data-toggle="collapse" href="#base">
+                <li class="nav-item shop-menu">
+                    <a data-toggle="collapse" href="#base" class="shopAreaExpended">
                         <i class="fas fa-layer-group"></i>
                         <p>Shop</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="base">
+                    <div class="collapse shop-submenu" id="base">
                         <ul class="nav nav-collapse">
-                            <li>
+                            <li class="nav-item {% if '/shops/create' in request.path %}active{% endif %}">
                                 <a href="{% url 'shops:create' %}">
-                                    <span class="sub-item">Shop Create</span>
+                                    <span class="sub-item" id="shop-create-navbar-sub-item">Shop Create</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="nav-item {% if '/shops/list' in request.path %}active{% endif %}">
                                 <a href="{% url 'shops:list' %}">
                                     <span class="sub-item">Shop List</span>
                                 </a>
@@ -71,20 +72,20 @@
                     </div>
                 </li>
                 
-                <li class="nav-item {% if 'employee' in request.path %}active{% endif %}">
-                    <a data-toggle="collapse" href="#employee">
+                <li class="nav-item employee-menu">
+                    <a data-toggle="collapse" href="#employee" class="employeeAreaExpended">
                         <i class="fas fa-table"></i>
                         <p>Employee</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="employee">
+                    <div class="collapse employee-submenu" id="employee">
                         <ul class="nav nav-collapse">
-                            <li>
+                            <li class="nav-item {% if '/employee/create/' in request.path %}active{% endif %}">
                                 <a href="{% url 'employees:create' %}">
                                     <span class="sub-item">Create Employee</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="nav-item {% if '/employee/list' in request.path %}active{% endif %}">
                                 <a href="{% url 'employees:list' %}">
                                     <span class="sub-item">Employee List</span>
                                 </a>
@@ -93,15 +94,15 @@
                     </div>
                 </li>
 
-                <li class="nav-item {% if 'product' in request.path %}active{% endif %}">
-                    <a data-toggle="collapse" href="#products">
+                <li class="nav-item product-menu">
+                    <a data-toggle="collapse" href="#products" class="productAreaExpended">
                         <i class="far fa-chart-bar"></i>
                         <p>Product</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="products">
+                    <div class="collapse product-submenu" id="products">
                         <ul class="nav nav-collapse">
-                            <li>
+                            <li class="nav-item {% if 'products/create/' in request.path %}active{% endif %}">
                                 <a href="{% url 'products:create' %}">
                                     <span class="sub-item">Product Add</span>
                                 </a>
@@ -110,13 +111,29 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a href="">
+                <li class="nav-item order-menu">
+                    <a data-toggle="collapse" href="#order" class="orderAreaExpended">
                         <i class="fas fa-desktop"></i>
                         <p>Order</p>
-                        <span class="badge badge-count badge-success">0</span>
+                        <span class="caret"></span>
+                        <span class="badge badge-count badge-danger">{{ request.order_count }}</span>
                     </a>
+                    <div class="collapse order-submenu" id="order">
+                        <ul class="nav nav-collapse">
+                            <li class="nav-item {% if 'orders/create/' in request.path %}active{% endif %}">
+                                <a href="{% url 'orders:create' %}">
+                                    <span class="sub-item acitve">Create New Order</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {% if 'orders/list/' in request.path %}active{% endif %}">
+                                <a href="{% url 'orders:list' %}">
+                                    <span class="sub-item">Order List</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+
                 {% endif %}
             </ul>
         </div>

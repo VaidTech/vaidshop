@@ -72,13 +72,10 @@
         </div>
       </div>
 
-
 <script type="text/javascript">
-    var shopDetailUrl = "{% url 'shops:detail' id=shop.id %}"
-</script>    
+    shopDetailUrl = "{% url 'shops:detail' shop.id %}"
+</script>
 {% endblock dashboard_content %}
-
-
 
 
 

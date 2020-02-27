@@ -2,16 +2,22 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core import serializers
 from django.template.loader import render_to_string
 
 from .forms import ShopForm 
 from owners.models import Owner 
 from shops.models import Shop
+from shops.decorators import shop_owner_entry_is_author
 
 
-@login_required()
+def user_is_owner(user):
+	return user.is_owner 
+
+
+@login_required
+@user_passes_test(user_is_owner)
 def shop_create_view(request):
 	data=dict()
 	if request.method == 'POST':
@@ -35,7 +41,9 @@ def shop_create_view(request):
 	return render(request, 'shops/shop-create.html', context)
 
 
-@login_required()
+@login_required
+@shop_owner_entry_is_author
+@user_passes_test(user_is_owner)
 def shop_update_view(request, id):
 	data = dict()
 	shop_instnace = Shop.objects.get(id=id)
@@ -61,7 +69,7 @@ def shop_update_view(request, id):
 	return render(request, 'shops/shop-update.html', context)
 
 
-@login_required()
+@login_required
 def shop_list_view(request):
 	owner = Owner.objects.get(user=request.user)
 	shop_qs = owner.shops.all()
@@ -73,21 +81,18 @@ def shop_list_view(request):
 	return render(request, 'shops/shop-list.html', context)
 
 
-@login_required()
+@login_required
+@shop_owner_entry_is_author
 def shop_detail_view(request, id):
-	shop_object = None
-	top4_shop_product = None
-	try:
-		shop_object = Shop.objects.get(id=id)
-	except:
-		pass 
-	if shop_object is not None:
-		top4_shop_product = shop_object.products.all()[:4]
+	shop_object = Shop.objects.get(id=id) 
+	top4_shop_product = shop_object.products.all()[:4]
 	context = {'shop': shop_object, 'top4_shop_product': top4_shop_product}
 	return render(request, 'shops/shop-detail.html', context)
 
 
-@login_required()
+@login_required
+@user_passes_test(user_is_owner)
+@shop_owner_entry_is_author
 def shop_delete_view(request, id):
     data = dict()
     is_delete = request.GET.get('delete')
@@ -111,7 +116,7 @@ def shop_delete_view(request, id):
     return render(request, 'shops/shop-delete.html', context)
 
 
-@login_required()
+@login_required
 def shop_product_list_view(request, id):
 	shop_object = None
 	shop_product = None

@@ -2,6 +2,24 @@
 
 <!-- jquery cdn -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- start dashboard -->
+    <!--   Core JS Files   -->
+    <!-- <script src="{% static 'js/dashboard/core/jquery.3.2.1.min.js' %}"></script> -->
+    <script src="{% static 'js/dashboard/core/popper.min.js' %}"></script>
+    <!-- <script src="{% static 'js/dashboard/core/bootstrap.min.js' %}"></script> -->
+
+    <!-- jQuery UI -->
+    <script src="{% static 'js/dashboard/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/dashboard/jquery.ui.touch-punch.min.js' %}"></script>
+
+    <!-- Bootstrap Toggle -->
+    <script src="{% static 'js/dashboard/bootstrap-toggle.min.js' %}"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'js/dashboard/jquery.scrollbar.min.js' %}"></script>
+    <!-- Azzara JS -->
+    <script src="{% static 'js/dashboard/ready.min.js' %}"></script>
+<!-- end dashboard -->
+
 
 <!-- fontawsome  -->
 <script src="https://kit.fontawesome.com/3b5fe7c866.js" crossorigin="anonymous"></script>
@@ -26,48 +44,17 @@
 <!-- shop js  -->
 <script src="{% static 'js/shop.js' %}"></script>
 
+<!-- order js  -->
+<script src="{% static 'js/order.js' %}"></script>
+
 <!-- django secure csrf ajax  -->
 <script src="{% static 'js/csrf.ajax.js' %}"></script>
 
 <!-- main js  -->
 <script src="{% static 'js/main.js' %}"></script>
 
-<!-- data tables -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-
-
 <!-- sweet alert  -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
-
-<!-- start dashboard -->
-
-    <!-- Fonts and icons -->
-    <script src="{% static 'js/dashboard/webfont.min.js' %}"></script>
-
-    <!--   Core JS Files   -->
-    <!-- <script src="{% static 'js/dashboard/core/jquery.3.2.1.min.js' %}"></script> -->
-    <script src="{% static 'js/dashboard/core/popper.min.js' %}"></script>
-    <!-- <script src="{% static 'js/dashboard/core/bootstrap.min.js' %}"></script> -->
-
-    <script>
-        var empListUrl = "{% url 'employees:list' %}"
-        var shopListUrl = "{% url 'shops:list' %}"
-    </script>
-
-    <!-- jQuery UI -->
-    <script src="{% static 'js/dashboard/jquery-ui.min.js' %}"></script>
-    <script src="{% static 'js/dashboard/jquery.ui.touch-punch.min.js' %}"></script>
-
-    <!-- Bootstrap Toggle -->
-    <script src="{% static 'js/dashboard/bootstrap-toggle.min.js' %}"></script>
-    <!-- jQuery Scrollbar -->
-    <script src="{% static 'js/dashboard/jquery.scrollbar.min.js' %}"></script>
-    <!-- Azzara JS -->
-    <script src="{% static 'js/dashboard/ready.min.js' %}"></script>
-
-<!-- end dashboard -->
-
-
-
+<!-- select2 jquery palagin -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>

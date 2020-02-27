@@ -25,6 +25,7 @@
                 <div class="product-stock-quantity-section mt-3">
                     <label for="{{ stock_form.stock_quantity.label }}">{{ stock_form.stock_quantity.label }}*</label>
                     {% render_field stock_form.stock_quantity class="form-control product-stock-quantity" placeholder=stock_form.stock_quantity.label rows="4" %}
+                    <div class="quantity-error-msg" style="color:red;"></div>
                 </div>
                 <div class="product-shop-select-section mt-3">
                     <label for="{{ product_form.shop.label }}">{{ product_form.shop.label }}*</label>
