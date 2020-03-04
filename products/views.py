@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .forms import ProductForm, StockForm 
 from products.models import Product
 
 
 @login_required()
+@permission_required('products.add_product', raise_exception=True)
 def product_create_view(request):
 	data = dict()
 	if request.method == 'POST':
@@ -34,6 +35,7 @@ def product_create_view(request):
 
 
 @login_required()
+@permission_required('products.view_product', raise_exception=True)
 def product_detail_view(request, id):
 	product_object = None
 	try:

@@ -193,6 +193,8 @@ $(function(){
     });
 
 
+    // employee date picker 
+      $("#id_date_of_birth").datepicker();
 
 
 

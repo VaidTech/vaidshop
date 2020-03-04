@@ -1,0 +1,55 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee-Permission{% endblock %}
+{% load widget_tweaks %}
+{% block dashboard_content %}
+<div class="employee-permission-list">
+	<div class="permission-list-header">
+		<h1 style="font-family: 'Courgette', cursive;color: red;text-align:center;">Employee Permission</h1>
+	</div><hr>
+
+  	<div class="table-responsive">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Employee Id</th>
+				<th>Employee Name</th>
+				<th>Permission</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for employee in owner.employees.all %}
+			<tr>
+				<th scope="row">{{ forloop.counter }}</th>
+				<td>{{ employee.user.username }}</td>
+				<td>
+					{% for permission in employee.user.get_user_permissions %}
+						{{ permission }} <span style="color: red;">{% if not forloop.last %}|{% endif %}</span>
+						{% if forloop.counter|divisibleby:3 %}
+						<br>
+						{% endif %}
+					{% empty %}
+					No Permission
+					{% endfor %}
+
+				</td>
+				<td>
+					{% if employee.user.get_all_permissions %}
+						<a href="{% url 'permissions:employee-permission' employee.user.id %}">Update Permission</a>
+					{% else %}
+						<a href="{% url 'permissions:employee-permission' employee.user.id %}">Add Permission</a>
+					{% endif %}
+				</td>
+			</tr>
+			{% empty %}
+			Not Found
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+</div>
+{% endblock dashboard_content %}
+
+
+

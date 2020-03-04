@@ -4,8 +4,8 @@
 
 {% block dashboard_content %}
 <div class="product mt-4 mb-4">
-    <div class="card m-auto" style="width: 28rem;">
-        <div class="card-body ml-5">
+    <div class="card m-auto" style="width: 32rem;">
+        <div class="card-body ml-3 mr-5">
             <h1 class="product-create-header mb-5">Add Product To Shop</h1>
             <div class="product-create-error mb-3" style="color: red;"></div>
             <form action="{% url 'products:create' %}" method='POST' id="product-add-form" enctype="multipart/form-data">

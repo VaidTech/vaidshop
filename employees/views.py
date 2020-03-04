@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse 
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from shops.decorators import employee_owner_entry_is_author
 
 from .forms import EmployeeForm
@@ -22,6 +22,7 @@ def user_is_owner(user):
 
 @login_required
 @user_passes_test(user_is_owner)
+@permission_required('employees.add_employee', raise_exception=True)
 def employee_create_view(request):
     error_dict = {}
     if request.method == 'POST':
@@ -56,6 +57,7 @@ def employee_create_view(request):
 @login_required
 @user_passes_test(user_is_owner)
 @employee_owner_entry_is_author
+@permission_required('employees.change_employee', raise_exception=True)
 def employee_update_view(request, id):  
     data = dict()
     employee_instance = Employee.objects.get(id=id)
@@ -100,6 +102,7 @@ def employee_update_view(request, id):
 @login_required
 @user_passes_test(user_is_owner)
 @employee_owner_entry_is_author
+@permission_required('employees.delete_employee', raise_exception=True)
 def employee_delete_view(request, id):
     data = dict()
     is_delete = request.GET.get('delete')
@@ -124,14 +127,19 @@ def employee_delete_view(request, id):
 
 
 @login_required
+@permission_required('employees.view_employee', raise_exception=True)
 def employee_list_view(request):
+    page_obj = None
     form = UserForm()
     employee_form = EmployeeForm()
-    owner = Owner.objects.get(user=request.user)
-    employee_qs = owner.employees.all()
-    page_number = request.GET.get('page')
-    paginator = Paginator(employee_qs, 10)
-    page_obj = paginator.get_page(page_number) 
+    try:
+        owner = Owner.objects.get(user=request.user)
+        employee_qs = owner.employees.all()
+        page_number = request.GET.get('page')
+        paginator = Paginator(employee_qs, 10)
+        page_obj = paginator.get_page(page_number) 
+    except:
+        pass 
     context = {
         'form': form,
         'employee_form': employee_form,

@@ -12,7 +12,9 @@ urlpatterns = [
     path('employee/', include('employees.urls')),
     path('shops/', include('shops.urls')),
     path('products/', include('products.urls')),
-    path('orders/', include('orders.urls'))
+    path('orders/', include('orders.urls')),
+    path('permissions/', include('permissions.urls')),
+    path('attendences/', include('attendences.urls'))
 ]
 
 
