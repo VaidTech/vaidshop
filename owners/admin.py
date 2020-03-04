@@ -5,6 +5,3 @@ from .models import Owner
 
 admin.site.register(Owner)
 
-
-
-

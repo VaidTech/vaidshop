@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'products',
     'core',
     'orders',
+    'permissions',
+    'attendences',
 
     'crispy_forms',
     'widget_tweaks',
@@ -59,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 
     'accounts.middleware.DashboardMiddleWare'
 ]

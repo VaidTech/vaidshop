@@ -35,17 +35,16 @@ h5, h2{
 }
 
 /*form general*/
-#email, #id_password1, #username, #id_password2, #login-password, #id_mobile_number, #id_date_of_birth, .shop-name, .product-title, .product-price, .product-stock-quantity{
-    width: 265px;
+#id_date_of_birth, #id_date, #id_entry_time{
     box-shadow: 0 0 4px white;
     border-radius: 4px;
     border: 1px solid #F2F4F4;
-    height: 30px;
+    height: 35px;
     line-height: 0px;
+    padding-left: 15px;
     margin: 0;
 }
-#image, #id_profile_photo, #id_gender, .shop-address, .shop-image, .product-image, .product-stock-type, .product-shop-select{
-    width: 265px;
+#image, #id_profile_photo, #id_gender, .shop-address, .shop-image, .product-image, .product-stock-type, .product-shop-select, .employee-permission{
     box-shadow: 0 0 4px white;
     border-radius: 4px;
     border: 1px solid #F2F4F4;
@@ -101,9 +100,6 @@ h5, h2{
         text-align: center;
         margin-left: -45px;
     }
-    .shop-description{
-        width: 270px;
-    }
     #shop-create-modal-content{
         width: 400px;
         background-color: #FEEFEF;
@@ -147,9 +143,6 @@ h5, h2{
     text-align: center;
     margin-left: -45px;
 }
-.product-description{
-    width: 270px;
-}
 .product-detail-title{
     font-family: 'Courgette', cursive;
     font-weight: 650;
@@ -177,5 +170,8 @@ h5, h2{
     margin-top: 200px;
 }
 
-
+/*Attendence */
+.attendence-select-employee{
+    height: 40px;
+}
 

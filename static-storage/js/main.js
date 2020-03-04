@@ -92,6 +92,14 @@ $(function(){
         $(".order-submenu").addClass("show")
      }
 
+     // attendence submenu show 
+     var attendenceMenu = $('.attendence-menu');
+     if (currentUrlPath == "attendences/add/" || currentUrlPath == "attendences/list/"){
+        attendenceMenu.addClass('submenu')
+        $('.attendenceAreaExpended').attr("aria-expanded", 'true')
+        $(".attendence-submenu").addClass("show")
+     }
+
 
 
 });

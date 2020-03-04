@@ -2,17 +2,19 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.contrib.auth.decorators import login_required
-from shops.decorators import order_user_entry_is_author
+from django.contrib.auth.decorators import login_required, permission_required
+from shops.decorators import order_creator_entry_is_author
 from django.http import HttpResponse
 from django.forms.models import formset_factory
 
 from .forms import CustomerForm, OrderForm
 from .models import Order, OrderProduct
 from products.models import Product
+from owners.models import Owner
 
 
 @login_required
+@permission_required('orders.add_order', raise_exception=True)
 def order_confirm_view(request):
 	data = dict()
 	if request.method == 'POST':
@@ -20,7 +22,13 @@ def order_confirm_view(request):
 		order_form = OrderForm(request.user, request.POST)
 		if customer_form.is_valid() and order_form.is_valid():
 			customer_instance = customer_form.save()
-			order_obj, created = Order.objects.get_or_create(user=request.user, active=True)
+			user = request.user
+			if user.is_owner:
+				owner = Owner.objects.get(user=user)
+			else:
+				employee = user.employee 
+				owner = employee.owner 
+			order_obj, created = Order.objects.get_or_create(owner=owner, creator=user, active=True)
 			order_obj.customer = customer_instance
 			order_obj.save()
 			data['order_id'] = order_obj.id
@@ -37,6 +45,7 @@ def order_confirm_view(request):
 
 
 @login_required
+@permission_required('orders.add_order', raise_exception=True)
 def order_product_view(request, id):
 	data = dict()
 	order_obj = get_object_or_404(Order, id=id)
@@ -55,6 +64,8 @@ def order_product_view(request, id):
 
 
 @login_required
+@permission_required('orders.change_order', raise_exception=True)
+@order_creator_entry_is_author
 def order_confirm_update_view(request, id):
 	data = dict()
 	order_object = Order.objects.get(id=id)
@@ -85,6 +96,8 @@ def order_confirm_update_view(request, id):
 
 
 @login_required
+@order_creator_entry_is_author
+@permission_required('orders.change_order', raise_exception=True)
 def order_product_update_view(request, id):
 	data = dict()
 	order_obj = get_object_or_404(Order, id=id)
@@ -117,9 +130,16 @@ def order_product_update_view(request, id):
 
 
 @login_required
+@permission_required('orders.view_order', raise_exception=True)
 def order_list_view(request):
+	user = request.user 
+	if user.is_owner:
+		owner = Owner.objects.get(user=user)
+	else:
+		employee = user.employee 
+		owner = employee.owner
 	order_qs = Order.objects.all()
-	order_qs = order_qs.filter(user=request.user)
+	order_qs = order_qs.filter(owner=owner)
 	context = {
 		'order_qs': order_qs
 	}
@@ -127,7 +147,8 @@ def order_list_view(request):
 
 
 @login_required
-@order_user_entry_is_author
+@order_creator_entry_is_author
+@permission_required('orders.delete_order', raise_exception=True)
 def order_delete_view(request, id):
 	data = dict()
 	is_delete = request.GET.get('delete')

@@ -4,6 +4,7 @@
 
 {% block dashboard_content %}
 <!-- shop create modal button -->
+{% if perms.shops.add_shop %}
 <div class="d-flex">
 	<button class="btn btn-danger btn-round ml-auto mb-3" data-toggle="modal" data-target="#shopCreate">
 		<i class="fa fa-plus"></i>
@@ -15,7 +16,8 @@
 <!-- shop create modal form  -->
 <div class="modal fade" id="shopCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content" id="shop-create-modal-content">
+
+		<div class="modal-content col-md-12" id="shop-create-modal-content">
 			<div class="modal-header no-bd">
                 <span class="fw-light m-auto">
                     <h1 id="create-modal-header">Shop Create</h1>
@@ -52,25 +54,27 @@
 		</div>
 	</div>
 </div>
+{% endif %}
 
 
+{% if perms.shops.view_shop %}
 <!-- shop list  -->
 <div class="shop-list">
 	<div class="row">
 		{% for shop in shops %}
-		<div class="col-md-3">
-			<div class="card" style="width: 15rem;">
+		<div class="col-md-4 col-lg-4 col-sm-5 col-xs-3 mb-4">
+			<div class="card m-auto" style="width: 14rem;">
 				<a href="{% url 'shops:detail' id=shop.id %}"><img class="card-img-top" src="{{ shop.image.url }}" alt="Card image cap"></a>
 				<div class="card-body">
 					<h5 class="card-title mb-2"><a href="{% url 'shops:detail' id=shop.id %}" style="font-family: 'Sriracha', cursive;">{{ shop.name }}</a></h5>
 					<p class="card-text">{{ shop.description|truncatewords:10 }}</p>
 				</div>
 			</div>
-		</div>	
+		</div>
 		{% endfor %}	
 	</div>
 </div>
-
+{% endif %}
 <script type="text/javascript">
     shopListUrl = "{% url 'shops:list' %}"
 </script>

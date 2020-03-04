@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth import get_user_model 
 from django.db.models.signals import pre_save, post_save
+from django.contrib.auth.models import Group, Permission
 
+from accounts.models import User
 
-from accounts.models import User 
 
 # User = get_user_model()
 
@@ -15,3 +16,11 @@ class Owner(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+
+
+
+
+
+

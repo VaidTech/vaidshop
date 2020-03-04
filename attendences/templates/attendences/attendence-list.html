@@ -1,0 +1,214 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee-Attendence{% endblock %}
+{% load widget_tweaks %}
+{% block dashboard_content %}
+<div class="employee-attendence-list">
+	<!-- success messages section  -->
+	<div class="messages">
+	{% if messages %}
+	    {% for message in messages %}
+	        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			  {{ message }}
+			</div>
+	    {% endfor %}
+	{% endif %}
+	</div>
+
+	<!-- employee attendence search section  -->
+	<div class="search-form">
+		<form action="{% url 'attendences:attendence-list' %}" >
+		<div class="row">
+			<!-- chose year  -->
+			<div class="col-md-3">
+				<div class="form-group form-group-default">
+					<label>Select Year</label>
+					<select name="year" class="form-control" id="formGroupDefaultSelect">
+						<option selected >2020</option>
+						{% for key, value in years.items %}
+							<option value="{{ value }}" 
+								{% if value == request.GET.year %}selected{% endif %}
+							>
+								{{ key }}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<!-- choose month -->
+			<div class="col-md-3">
+				<div class="form-group form-group-default">
+					<label>Select Month</label>
+					<select name="month" class="form-control" id="formGroupDefaultSelect">
+						<option selected disabled="disabled">--------</option>
+						{% for key, value in months.items %}
+							<option value="{{ value }}" 
+								{% if value == request.GET.month %}selected{% endif %}
+							>
+								{{ key }}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
+				</div>
+				<!-- enter name  -->
+				{% if request.user.is_owner %}
+				<div class="col-md-3">
+					<div class="form-group form-group-default" style="height: 60px;">
+						<label>Employee Name</label>
+						<input id="Name" type="text" name="employee_name" class="form-control" placeholder="Enter Employee Name" value="{{ request.GET.employee_name }}">
+					</div>
+				</div>
+				{% endif %}
+				<button type="submit" class="btn btn-outline-primary" style="height: 60px;">Search</button>
+			</div>
+		</form>
+	</div><hr>
+
+	<!-- owner entry employee attendence  -->
+		<!-- owner entry employee attendence searching data  -->
+	<div class="attendence-table">
+		{% if request.user.is_owner %}
+			{% if request.GET %}
+			<div class="attendence-table-employee-entry">
+				<table class="table table-bordered table-bordered-bd-warning mt-4">
+					<thead>
+						<tr>
+							<th scope="col">Id</th>
+							<th scope="col">Employee Name</th>
+							<th scope="col">Date</th>
+							<th scope="col">Day</th>
+							<th scope="col">Entry Time</th>
+							<th scope="col">Exit Time</th>
+							<th scope="col">Approval Status</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for attendence in attendence_qs %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ attendence.employee }}</td>
+							<td>{{ attendence.date|date:'d, M, Y' }}</td>
+							<td>{{ attendence.date|date:'l' }}</td>
+							<td>{{ attendence.entry_time }}</td>
+							<td>{{ attendence.exit_time }}</td>
+							<td>{{ attendence.is_approved }}</td>
+							<td>
+								<a href="{% url 'attendences:attendence-edit' attendence.id %}">edit</a>
+								<button type="button" class="btn btn-link attendence-delete-btn" data-toggle="modal" data-target="#exampleModal" data-url="{% url 'attendences:attendence-delete' attendence.id %}" style="margin-top: -3px;">
+									delete
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% else %}
+
+		<!-- owner employee attendence data  -->
+		<div class="row">
+			{% for employee in employee_qs %}
+			<div class="col-md-6 m-auto">
+				<div class="" style="width: 26rem;">
+				  <div class="card-body">
+				    <h5 class="card-title">{{ employee }}</h5>
+				    <h6 class="card-subtitle mb-2 text-muted">Last 3 days Attendence</h6>
+				    <table class="table table-bordered table-bordered-bd-warning mt-4">
+						<thead>
+							<tr>
+								<th scope="col">Id</th>
+								<th scope="col">Date</th>
+								<th scope="col">Day</th>
+								<th scope="col">Entry Time</th>
+								<th scope="col">Exit Time</th>
+								<th scope="col">Approval Status</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for attendence in employee.attendence_set.all|slice:'3' %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td>{{ attendence.date|date:'d, M, Y' }}</td>
+								<td>{{ attendence.date|date:'l' }}</td>
+								<td>{{ attendence.entry_time }}</td>
+								<td>{{ attendence.exit_time }}</td>
+								<td>{{ attendence.is_approved }}</td>
+								<td>
+									{% if perms.attendences.change_attendence %}
+									<a href="{% url 'attendences:attendence-edit' attendence.id %}">edit</a>
+									{% endif %}
+									{% if perms.attendences.delete_attendence %}
+									<!-- Attendence Delete Button -->
+									<button type="button" class="btn btn-link attendence-delete-btn" data-toggle="modal" data-target="#exampleModal" data-url="{% url 'attendences:attendence-delete' attendence.id %}" style="margin-left: -20px;">
+									  delete
+									</button>
+									{% endif %}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				    <a href="{% url 'attendences:attendence-list-detail' employee.id %}" class="card-link">View More</a>
+				  </div>
+				</div>	
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+		{% else %}
+
+		<!-- employee entry  -->
+		<div class="attendence-table-employee-entry">
+			<table class="table table-bordered table-bordered-bd-warning mt-4">
+				<thead>
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Date</th>
+						<th scope="col">Day</th>
+						<th scope="col">Approval Status</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for attendence in employee_attendence %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ attendence.date|date:'d, M, Y' }}</td>
+						<td>{{ attendence.date|date:'l' }}</td>
+						<td>{{ attendence.is_approved }}</td>
+						<td>
+							{% if perms.attendences.change_attendence %}
+							<a href="{% url 'attendences:attendence-edit' attendence.id %}">edit</a>
+							{% endif %}
+							{% if perms.attendences.delete_attendence %}
+							<button type="button" class="btn btn-link attendence-delete-btn" data-toggle="modal" data-target="#exampleModal" data-url="{% url 'attendences:attendence-delete' attendence.id %}" style="margin-top: -3px;">
+								delete
+							</button>
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% endif %}
+	</div>
+</div>
+
+
+<!-- Attendence delete Modal -->
+<div class="modal fade" id="attendenceModal" tabindex="-1" role="dialog" aria-labelledby="attendenceModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin-top: 200px;">
+    <div class="modal-content" id="attendence-modal-content">
+      
+  </div>
+</div>
+</div>
+{% endblock dashboard_content %}
+
+

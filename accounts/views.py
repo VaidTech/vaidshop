@@ -3,14 +3,32 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Permission
 
 from .forms import UserForm, OwnerRegisterForm, LoginForm
 from owners.models import Owner
 from accounts.models import User 
 
-# User = get_user_model()
 
 def owner_register_view(request):
+    owner_permission_qs = Permission.objects.exclude(
+        content_type__app_label='auth'
+        ).exclude(
+        content_type__app_label='accounts'
+        ).exclude(
+        content_type__app_label='sessions'
+        ).exclude(
+        content_type__app_label='core'
+        ).exclude(
+        content_type__app_label='owners'
+        ).exclude(
+        content_type__app_label='admin'
+        ).exclude(
+        content_type__app_label='contenttypes'
+        ).exclude(
+        content_type__model='stock'
+    )
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         owner_register_form = OwnerRegisterForm(request.POST, request.FILES)
@@ -21,6 +39,9 @@ def owner_register_view(request):
             instance.user.is_owner = True 
             instance.save()
             instance.user.save()
+            for permission in owner_permission_qs:
+                user = instance.user 
+                user.user_permissions.add(permission)
             messages.success(request, 'Successfully owner registered.')
             return redirect('accounts:login')
     else:
