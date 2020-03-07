@@ -1,34 +1,8 @@
 from django import forms 
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import Permission
-
 from employees.models import Employee
-from accounts.models import User 
+from accounts.models import User
+from core.custom.others.permissions_data import employee_permission_qs 
 
-
-employee_permission_qs = Permission.objects.exclude(
-		content_type__app_label='auth'
-		).exclude(
-		content_type__app_label='accounts'
-		).exclude(
-		content_type__app_label='sessions'
-		).exclude(
-		content_type__app_label='core'
-		).exclude(
-		content_type__app_label='employees'
-		).exclude(
-		content_type__app_label='owners'
-		).exclude(
-		content_type__app_label='admin'
-		).exclude(
-		content_type__app_label='contenttypes'
-		).exclude(
-		content_type__model='customer'
-		).exclude(
-		content_type__model='orderproduct'
-		).exclude(
-		content_type__model='stock'
-	)
 
 class EmployeePermissionForm(forms.ModelForm):
 	class Meta:

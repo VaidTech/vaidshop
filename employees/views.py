@@ -7,8 +7,7 @@ from django.urls import reverse
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
-from shops.decorators import employee_owner_entry_is_author
-
+from core.custom.decorator.decorators import employee_owner_entry_is_author
 from .forms import EmployeeForm
 from .models import Employee
 from accounts.forms import UserForm, UserUpdateForm
@@ -18,7 +17,6 @@ from accounts.models import User
 
 def user_is_owner(user):
     return user.is_owner
-
 
 @login_required
 @user_passes_test(user_is_owner)
@@ -77,11 +75,7 @@ def employee_update_view(request, id):
                 if email:
                     instance_user.email = email 
                 instance_user.save()
-
             employee_form.save()
-            # data['employee_list'] = render_to_string('employees/employee-list.html', {
-            #     'instance': employee_instance
-            # })
             return redirect("/employee/list/")
         else:
             data['errors'] = {'status': 'form-invalid', 'employee_user_errors': user_form.errors, 'employee_errors': employee_form.errors}
@@ -115,7 +109,6 @@ def employee_delete_view(request, id):
         employee_instance.delete()
         return redirect("employees:list")
     else:
-        # return reverse("employees:detail", kwargs={'id': id})
         pass
     context = {
         'object': employee_instance
@@ -144,9 +137,5 @@ def employee_list_view(request):
         'form': form,
         'employee_form': employee_form,
         'page_obj': page_obj
-
     }
     return render(request, 'employees/employee-list.html', context)
-
-
-

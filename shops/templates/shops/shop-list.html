@@ -1,7 +1,6 @@
 {% extends 'accounts/dashboard.html' %}
 {% block title %}Shop List{% endblock title %}
 {% load widget_tweaks %}
-
 {% block dashboard_content %}
 <!-- shop create modal button -->
 {% if perms.shops.add_shop %}
@@ -11,12 +10,9 @@
 		Add Shop
 	</button>
 </div>
-
-
 <!-- shop create modal form  -->
 <div class="modal fade" id="shopCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-
 		<div class="modal-content col-md-12" id="shop-create-modal-content">
 			<div class="modal-header no-bd">
                 <span class="fw-light m-auto">
@@ -26,9 +22,8 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body ml-4">
+			<div class="modal-body ml-2 mr-3">
 			<div class="shop-create-error mb-3" style="color: red;"></div>
-
             <form action="{% url 'shops:create' %}" method='POST' enctype="multipart/form-data" id="shop-create-form">
                 {% csrf_token %}
                 <div class="shop-name-section">
@@ -55,8 +50,6 @@
 	</div>
 </div>
 {% endif %}
-
-
 {% if perms.shops.view_shop %}
 <!-- shop list  -->
 <div class="shop-list">
@@ -79,9 +72,3 @@
     shopListUrl = "{% url 'shops:list' %}"
 </script>
 {% endblock dashboard_content %}
-
-
-
-
-
-

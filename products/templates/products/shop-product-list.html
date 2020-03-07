@@ -1,6 +1,5 @@
 {% extends 'accounts/dashboard.html' %}
 {% block title %}Shop Products{% endblock title %}
-
 {% block dashboard_content %}
 <div class="card m-auto" style="width: 40rem;">
   	<div class="card-body">
@@ -33,13 +32,7 @@
     <p>This shop has no product</p>
     {% endfor %}
 </div>
-
-
-
 <script type="text/javascript">
   shopProductListUrl = "{% url 'shops:shop-products' shop_object.id %}"
 </script>
-
 {% endblock dashboard_content %}
-
-

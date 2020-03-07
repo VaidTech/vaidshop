@@ -3,10 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required, permission_required
-from shops.decorators import order_creator_entry_is_author
+from core.custom.decorator.decorators import order_creator_entry_is_author
 from django.http import HttpResponse
 from django.forms.models import formset_factory
-
 from .forms import CustomerForm, OrderForm
 from .models import Order, OrderProduct
 from products.models import Product
@@ -168,10 +167,3 @@ def order_delete_view(request, id):
 	    data['html_form'] = render_to_string('orders/order-delete.html', context, request=request)
 	    return JsonResponse(data)
 	return render(request, 'orders/order-delete.html', context)
-
-
-
-
-
-
-

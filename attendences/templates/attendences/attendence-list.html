@@ -16,7 +16,6 @@
 	    {% endfor %}
 	{% endif %}
 	</div>
-
 	<!-- employee attendence search section  -->
 	<div class="search-form">
 		<form action="{% url 'attendences:attendence-list' %}" >
@@ -66,7 +65,6 @@
 			</div>
 		</form>
 	</div><hr>
-
 	<!-- owner entry employee attendence  -->
 		<!-- owner entry employee attendence searching data  -->
 	<div class="attendence-table">
@@ -108,7 +106,6 @@
 				</table>
 			</div>
 		{% else %}
-
 		<!-- owner employee attendence data  -->
 		<div class="row">
 			{% for employee in employee_qs %}
@@ -161,7 +158,6 @@
 		</div>
 		{% endif %}
 		{% else %}
-
 		<!-- employee entry  -->
 		<div class="attendence-table-employee-entry">
 			<table class="table table-bordered table-bordered-bd-warning mt-4">
@@ -199,16 +195,11 @@
 		{% endif %}
 	</div>
 </div>
-
-
 <!-- Attendence delete Modal -->
 <div class="modal fade" id="attendenceModal" tabindex="-1" role="dialog" aria-labelledby="attendenceModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" style="margin-top: 200px;">
     <div class="modal-content" id="attendence-modal-content">
-      
   </div>
 </div>
 </div>
 {% endblock dashboard_content %}
-
-

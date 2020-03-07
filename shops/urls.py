@@ -2,14 +2,8 @@ from django.urls import path
 
 app_name = 'shops'
 
-from .views import (
-	shop_create_view,
-	shop_list_view,
-	shop_update_view,
-	shop_detail_view,
-	shop_delete_view,
-	shop_product_list_view,
-	)
+from .views import (shop_create_view, shop_list_view, shop_update_view, shop_detail_view, 
+	shop_delete_view, shop_product_list_view,)
 
 
 urlpatterns = [
@@ -20,6 +14,3 @@ urlpatterns = [
 	path('delete/<int:id>/', shop_delete_view, name='delete'),
 	path('products/<int:id>/', shop_product_list_view, name='shop-products')
 ]
-
-
-

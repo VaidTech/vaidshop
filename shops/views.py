@@ -5,16 +5,14 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.core import serializers
 from django.template.loader import render_to_string
-
 from .forms import ShopForm 
 from owners.models import Owner 
 from shops.models import Shop
-from shops.decorators import shop_creator_entry_is_author
+from core.custom.decorator.decorators import shop_creator_entry_is_author
 
 
 def user_is_owner(user):
 	return user.is_owner 
-
 
 @login_required
 @permission_required('shops.add_shop', raise_exception=True)
@@ -152,12 +150,3 @@ def shop_product_list_view(request, id):
 		"shop_object": shop_object
 	}
 	return render(request, 'products/shop-product-list.html', context)
-
-
-
-
-
-
-
-
-

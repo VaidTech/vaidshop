@@ -1,5 +1,4 @@
 from django import forms 
-
 from .models import Order, Customer, OrderProduct
 from products.models import Product 
 from owners.models import Owner 
@@ -24,6 +23,3 @@ class OrderForm(forms.ModelForm):
 			employee = user.employee 
 			owner = employee.owner
 		self.fields['products'].queryset = Product.objects.filter(shop__owner=owner)
-
-
-
