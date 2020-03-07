@@ -9,7 +9,6 @@
 		Add Employee
 	</button>
 </div>
-
 <!-- Employee Create Modal -->
 <div class="modal fade" id="employeeCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -34,7 +33,6 @@
 				<p id="emp-modal-error-pass3"></p>
 				<p id="emp-modal-error-pass4"></p>
 			</div>
-
             <form action="{% url 'employees:create' %}" method='POST' enctype="multipart/form-data" id="employee-registered-modal-form">
                 {% csrf_token %}
                 <div class="row">
@@ -55,8 +53,6 @@
 		</div>
 	</div>
 </div>
-
-
 <!-- Employee table  -->
 <table class="table table-bordered table-head-bg-info table-bordered-bd-info" id="employee-table">
 	<thead>
@@ -88,40 +84,28 @@
 				<button type="button" class="btn btn-link update-employee" data-toggle="modal" data-target="#employeeUpdateModal" data-url="{% url 'employees:update' id=emp.id %}">
 				  <i class="fa fa-edit"></i>
 				</button>
-
 				<button type="button" data-url="{% url 'employees:delete' id=emp.id %}"class="btn btn-link delete-employee" data-toggle="modal" data-target="#employeeDeleteModal">
   					<i class="fas fa-trash-alt"></i>
 				</button>
-				   
             </td>
 		</tr>
 		{% endfor %}
-		
-
 	</tbody>
 </table>
-
-
 <!-- Employee Update Modal -->
 <div class="modal fade" id="employeeUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
   <div class="modal-dialog" role="document">
     <div class="modal-content update-modal-content">
-
     </div>
   </div>
 </div>
-
-
 <!-- Employee Delete Modal -->
 <div class="modal fade" id="employeeDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content delete-modal-content">
-      
     </div>
   </div>
 </div>
-
-
 <!-- paginator  -->
 <nav aria-label="...">
 	<ul class="pagination mb-0">
@@ -146,15 +130,7 @@
 		</li>
 	</ul>
 </nav>
-
 <script>
      empListUrl = "{% url 'employees:list' %}"
 </script>
-
 {% endblock dashboard_content %}
-
-
-
-
-
-

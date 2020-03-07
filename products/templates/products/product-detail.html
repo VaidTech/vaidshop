@@ -1,6 +1,5 @@
 {% extends 'accounts/dashboard.html' %}
 {% block title %}Detail{% endblock title %}
-
 {% block dashboard_content %}
 <div class="product-detail mt-5">
 	<a href="{% url 'shops:detail' product.shop.id %}" class="btn btn-outline-danger">Go Back To Shop</a>
@@ -27,5 +26,3 @@
 	productDetailUrl = "{% url 'products:detail' product.id %}"
 </script>
 {% endblock dashboard_content %}
-
-

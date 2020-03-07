@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, permission_required
-
 from .forms import ProductForm, StockForm 
 from products.models import Product
 
@@ -46,11 +45,3 @@ def product_detail_view(request, id):
 		'product': product_object
 	}
 	return render(request, 'products/product-detail.html', context)
-
-
-
-
-
-
-
-

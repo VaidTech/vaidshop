@@ -1,5 +1,4 @@
 from django import forms 
-
 from .models import Product, Stock 
 from shops.models import Shop 
 from owners.models import Owner 
@@ -24,10 +23,3 @@ class StockForm(forms.ModelForm):
 	class Meta:
 		model = Stock 
 		fields = ('stock_type', 'stock_quantity')
-
-
-
-
-
-
-

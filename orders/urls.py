@@ -1,7 +1,5 @@
 from django.urls import path 
-
 from .views import order_confirm_view, order_list_view, order_delete_view, order_product_view,order_confirm_update_view, order_product_update_view
-
 
 app_name = 'orders'
 
@@ -14,5 +12,3 @@ urlpatterns = [
 	path('update/<int:id>/', order_confirm_update_view, name='update'),
 	path('order-product/update/<int:id>/', order_product_update_view, name='order-product-update'),
 ]
-
-

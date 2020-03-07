@@ -176,6 +176,13 @@
                                 </a>
                             </li>
                             {% endif %}
+                            {% if perms.attendences.view_attendence and request.user.is_owner %}
+                            <li class="nav-item {% if 'attendences/annual/report/' in request.path %}active{% endif %}">
+                                <a href="{% url 'attendences:attendence-annual-report' %}">
+                                    <span class="sub-item">Attendence Annual Report</span>
+                                </a>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </li>
@@ -199,10 +206,7 @@
                     </div> -->
                 </li>
                 {% endif %}
-
             </ul>
         </div>
     </div>
 </div>
-
-

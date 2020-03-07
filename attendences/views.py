@@ -3,13 +3,12 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
-
 from .forms import AttendenceForm 
 from owners.models import Owner
 from .models import Attendence
 from employees.models import Employee
-from .choices import months, years
-from shops.decorators import attendence_employee_entry_is_author
+from core.custom.others.choices import months, years
+from core.custom.decorator.decorators import attendence_employee_entry_is_author
 
 
 @login_required
@@ -95,7 +94,6 @@ def attendence_list(request):
 			year = request.GET.get('year')
 			if year:
 				employee_attendence = employee_attendence.filter(date__year=year)
-
 	context = {
 		'attendence_qs': attendence_qs,
 		'employee_qs': employee_qs,
@@ -137,3 +135,38 @@ def attendence_delete_view(request, id):
 	return render(request, 'attendences/attendence-delete.html', context)
 
 
+@login_required
+@permission_required('attendences.view_attendence', raise_exception=True)
+def attendence_chart_view(request):
+	data = []
+	labels = []
+	user = request.user
+	year = request.GET.get('chart_year', 2020)
+	print(year)
+	if user.is_owner:
+		owner = user.owner 
+		employee_qs = Employee.objects.filter(owner=owner)
+		attendence_qs = Attendence.objects.all()
+		for employee in employee_qs:
+			labels.append(employee.user.username)
+			attendences = Attendence.objects.filter(employee=employee, date__year=year)
+			months = []
+			for i in range(1,13):
+				months.append(attendences.filter(date__month=i).count())
+			data.append(months)
+	else:
+		pass
+	return JsonResponse({'data':data, 'labels': labels})
+
+
+def is_owner(user):
+	return user.is_owner 
+
+@login_required
+@user_passes_test(is_owner)
+@permission_required('attendences.view_attendence', raise_exception=True)
+def attendence_annual_view(request):
+	context = {
+		'years': years
+	}
+	return render(request, 'attendences/annual-attendence.html', context)

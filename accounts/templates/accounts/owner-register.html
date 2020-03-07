@@ -1,34 +1,54 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load crispy_forms_tags %}
 {% block title %} Owner Registration {% endblock title %}
-
 {% block content %}
-    <div class="owner-register mt-4">
-        <div class="card m-auto" style="width: 25rem;">
-            <div class="card-body ml-3">
-                <!-- Error messages show -->
-                <div class="register-error"></div>
-
-                <!-- register form  -->
-                <form action="{% url 'accounts:owner-register' %}" method='post' class="owner-register" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    {{ o_r_form|crispy }}
-                    <input type="submit" class='btn btn-primary' value='SignUp'>
-                    <p><small>Have an owner account? <a href="{% url 'accounts:login' %}">Sign In</a>  </small></p>
-                </form>
-            </div>
-          </div>
-    </div><br><br>
-
-    
+<div class="register mt-4">
+    <div class="card m-auto" id="registration-card">
+        <div class="card-body ml-5 mr-3 mb-4">
+            <h1 class="register-header">Owner Registration</h1>
+            <!-- Error messages show -->
+            <div class="register-error"></div>
+            <!-- register form  -->
+            <form action="{% url 'accounts:owner-register' %}" method='post' class="owner-register" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="register-errors">
+                   {% if form.username.errors %}
+                        {{ form.username.errors }}<br>
+                   {% endif %}
+                   {% if form.password1.errors %}
+                        {{ form.password1.errors }}
+                   {% endif %}
+                   {% if form.password2.errors %}
+                        {{ form.password2.errors }}
+                   {% endif %}
+                </div>
+                <div class="owner-register-username-form">
+                    <label for="{{ form.username.label }}"><span>{{ form.username.label }}*</span></label>
+                    {% render_field form.username class="form-control" placeholder="Username" %}
+                    <small>{{ form.username.help_text }}</small>
+                </div><br>
+                <div class="owner-register-email-form">
+                    <label for="{{ form.email.label }}"><span>{{ form.email.label }}*</span></label>
+                    {% render_field form.email class="form-control" placeholder="Email Address" %}
+                </div><br>
+                <div class="owner-register-password1-form">
+                    <label for="{{ form.password1.label }}"><span>{{ form.password1.label }}*</span></label>
+                    {% render_field form.password1 class="form-control" placeholder="Password" %}
+                    <small class="ml-1">{{ form.password1.help_text }}</small>
+                </div>
+                <div class="owner-register-password2-form">
+                    <label for="{{ form.password2.label }}"><span>{{ form.password2.label }}*</span></label>
+                    {% render_field form.password2 class="form-control" placeholder="Password Confirmation" %}
+                </div><br>
+                <div class="owner-register-image-form">
+                    <label for="{{ o_r_form.image.label }}"><span>{{ o_r_form.profile_photo.label }}*</span></label>
+                    {% render_field o_r_form.profile_photo class="form-control" placeholder="Profile Image" %}
+                </div><br>
+                <input type="submit" class='btn btn-primary' value='SignUp'>
+                <small>Have an owner account? <a href="{% url 'accounts:login' %}">Sign In</a></small>
+            </form>
+        </div>
+      </div>
+</div><br><br>
 {% endblock content %}
-
-
-
-
-
-
-
-
-

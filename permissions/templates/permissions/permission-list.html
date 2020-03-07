@@ -6,7 +6,6 @@
 	<div class="permission-list-header">
 		<h1 style="font-family: 'Courgette', cursive;color: red;text-align:center;">Employee Permission</h1>
 	</div><hr>
-
   	<div class="table-responsive">
 	<table class="table table-bordered">
 		<thead>
@@ -31,7 +30,6 @@
 					{% empty %}
 					No Permission
 					{% endfor %}
-
 				</td>
 				<td>
 					{% if employee.user.get_all_permissions %}
@@ -47,9 +45,5 @@
 		</tbody>
 	</table>
 </div>
-
 </div>
 {% endblock dashboard_content %}
-
-
-

@@ -1,4 +1,3 @@
-
 {% load widget_tweaks %}
 <div class="shop-update" style="width: 24rem; margin-left: 20px;">
     <div class="modal-header no-bd">
@@ -7,9 +6,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
-
-        <div class="shop-update-modal-error ml-3" style="color: red;"></div>
-    <form class="shop-update-form" action="{% url 'shops:update' id=shop.id %}" enctype="multipart/form-data">
+        <div class="shop-update-modal-error ml-2" style="color: red;"></div>
+    <form class="shop-update-form mr-4" action="{% url 'shops:update' id=shop.id %}" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="shop-update-name-section mb-3">
                 <label for="{{ shop_update_form.name.label }}">{{ shop_update_form.name.label }}</label>
@@ -27,7 +25,6 @@
                 <label for="{{ shop_update_form.image.label }}">{{ shop_update_form.image.label }}</label>
                 {% render_field shop_update_form.image class="form-control shop-image" placeholder=shop_update_form.image.label %}
             </div>
-            
         </div>
         <div class="shop-update-btn mb-5">
             <button type="submit" class="btn btn-primary">Update Shop</button>
@@ -35,12 +32,3 @@
         </div>
     </form>
 </div>
-
-
-
-
-
-
-
-
-
