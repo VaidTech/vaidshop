@@ -1,5 +1,4 @@
 {% load crispy_forms_tags %}
-{% block content %}
   <form action="{% url 'employees:update' id=object.id %}" method="post" enctype="multipart/form-data" id="employee-update-form">
     <div class="modal-header no-bd">
       <span class="fw-light m-auto">
@@ -30,4 +29,3 @@
       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
     </div>           
   </form>
-{% endblock content %}

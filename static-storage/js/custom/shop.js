@@ -1,4 +1,4 @@
-$(function(){
+ $(function(){
 	// shop create 
 	var shopForm = $("#shop-create-form")
 	shopForm.submit(function(event){

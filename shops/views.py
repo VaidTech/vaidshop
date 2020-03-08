@@ -52,7 +52,7 @@ def shop_update_view(request, id):
 	data = dict()
 	shop_instnace = Shop.objects.get(id=id)
 	if request.method == 'POST':
-		shop_update_form = ShopForm(request.POST, instance=shop_instnace)
+		shop_update_form = ShopForm(request.POST, request.FILES, instance=shop_instnace)
 		if shop_update_form.is_valid():
 			name = shop_update_form.cleaned_data['name']
 			shop_qs = Shop.objects.filter(name__iexact=name).exclude(id=id).exists()

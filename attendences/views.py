@@ -142,7 +142,6 @@ def attendence_chart_view(request):
 	labels = []
 	user = request.user
 	year = request.GET.get('chart_year', 2020)
-	print(year)
 	if user.is_owner:
 		owner = user.owner 
 		employee_qs = Employee.objects.filter(owner=owner)

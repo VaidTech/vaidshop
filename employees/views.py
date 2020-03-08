@@ -76,7 +76,6 @@ def employee_update_view(request, id):
                     instance_user.email = email 
                 instance_user.save()
             employee_form.save()
-            return redirect("/employee/list/")
         else:
             data['errors'] = {'status': 'form-invalid', 'employee_user_errors': user_form.errors, 'employee_errors': employee_form.errors}
     else:
@@ -91,7 +90,7 @@ def employee_update_view(request, id):
         data['html_form'] = render_to_string('employees/employee-form.html', context, request=request)
         return JsonResponse(data)
     return render(request, 'employees/employee-update.html', context)
-
+ 
 
 @login_required
 @user_passes_test(user_is_owner)
@@ -139,3 +138,13 @@ def employee_list_view(request):
         'page_obj': page_obj
     }
     return render(request, 'employees/employee-list.html', context)
+
+
+@login_required
+@permission_required('employees.view_employee', raise_exception=True)
+def employee_detail_view(request, id):
+    employee_object = Employee.objects.get(id=id)
+    context = {
+        'employee_object': employee_object 
+    }
+    return render(request, 'employees/employee-detail.html', context)
