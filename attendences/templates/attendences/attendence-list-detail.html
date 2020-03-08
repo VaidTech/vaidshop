@@ -1,0 +1,45 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee-Attendence{% endblock %}
+{% load widget_tweaks %}
+{% block dashboard_content %}
+<div class="attendence-table-employee-entry">
+	<table class="table table-bordered table-bordered-bd-warning mt-4">
+		<thead>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Date</th>
+				<th scope="col">Day</th>
+				<th scope="col">Entry Time</th>
+				<th scope="col">Exit Time</th>
+				<th scope="col">Approval Status</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for attendence in employee_attendence %}
+			<tr>
+				<td>{{ forloop.counter }}</td>
+				<td>{{ attendence.date|date:'d, M, Y' }}</td>
+				<td>{{ attendence.date|date:'l' }}</td>
+				<td>{{ attendence.entry_time }}</td>
+				<td>{{ attendence.exit_time }}</td>
+				<td>{{ attendence.is_approved }}</td>
+				<td>
+					<a href="{% url 'attendences:attendence-edit' attendence.id %}">edit</a>
+					<button type="button" class="btn btn-link attendence-delete-btn" data-toggle="modal" data-target="#exampleModal" data-url="{% url 'attendences:attendence-delete' attendence.id %}" style="margin-top: -3px;">
+						delete
+					</button>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<!-- Attendence delete Modal -->
+<div class="modal fade" id="attendenceModal" tabindex="-1" role="dialog" aria-labelledby="attendenceModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin-top: 200px;">
+    <div class="modal-content" id="attendence-modal-content">   
+  </div>
+</div>
+</div>
+{% endblock dashboard_content %}

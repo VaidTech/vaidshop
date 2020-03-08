@@ -1,15 +1,21 @@
 {% extends 'accounts/dashboard.html' %}
 {% block title %}Employee Create{% endblock title %}
-
 {% block dashboard_content %}
 <div class="shop-detail mt-4 mb-4">
     <div class="buttn">
+        {% if perms.shops.change_shop %}
+            {% if shop.owner.user == request.user or shop.creator == request.user %}
         <!-- shop update modal button -->
-        <button type="button" id="shop-update-modal-btn"class="btn btn btn-outline-warning" data-toggle="modal" data-target="#shopUpdateModal" data-url="{% url 'shops:update' id=shop.id %}">Edit</button>
+        <button type="button" id="shop-update-modal-btn"class="btn btn btn-outline-warning" data-toggle="modal" data-target="#shopUpdateModal" data-url="{% url 'shops:update' shop.id %}">Edit</button>
+            {% endif %}
+        {% endif %}
+        {% if perms.shops.delete_shop %}
+            {% if shop.owner.user == request.user or shop.creator == request.user %}
         <!-- shop delete modal button -->
-        <button type="button" id="shop-delete-modal-btn"class="btn btn btn-outline-danger" data-toggle="modal" data-target="#shopDeleteModal" data-url="{% url 'shops:delete' id=shop.id %}">Delete</button>
+        <button type="button" id="shop-delete-modal-btn"class="btn btn btn-outline-danger" data-toggle="modal" data-target="#shopDeleteModal" data-url="{% url 'shops:delete' shop.id %}">Delete</button>
+            {% endif %}
+        {% endif %}
     </div>
-
     <!-- shop update Modal -->
     <div class="modal fade" id="shopUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -18,7 +24,6 @@
         </div>
       </div>
     </div>
-
     <!-- shop delete Modal -->
     <div class="modal fade" id="shopDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px;">
       <div class="modal-dialog" role="document">
@@ -27,7 +32,6 @@
         </div>
       </div>
     </div>
-
     <!-- shop - detail  -->
     <div class="card m-auto" style="width: 37rem;">
         <div class="card-body ml-5">
@@ -36,7 +40,8 @@
                     <div class="shop-title">
                         <p class="shop-detail-title-address"> <span class="shop-detail-title">{{ shop.name }}</span><br> {{ shop.address }}</p>
                     </div>
-                     <span class="shop-detail-owner">Owner:</span> {{ shop.owner }}
+                     <span class="shop-detail-owner">Owner:</span> {{ shop.owner }}<br>
+                     <span class="shop-detail-owner">Creator:</span> {{ shop.creator }}
             		<p class="shop-detail-description">{{ shop.description }}</p>
                     <a href="{% url 'shops:shop-products' id=shop.id %}" class="btn btn-danger btn-border">View All {{ shop.products.all.count }} Types Product</a>
             	</div>
@@ -47,7 +52,6 @@
         </div>
     </div>
 </div>
-
 <!-- top 5 products -->
 <div class="shop-product-top5" style="margin-top: 80px;">
        <hr>
@@ -71,12 +75,7 @@
             {% endfor %}
         </div>
       </div>
-
 <script type="text/javascript">
     shopDetailUrl = "{% url 'shops:detail' shop.id %}"
 </script>
 {% endblock dashboard_content %}
-
-
-
-

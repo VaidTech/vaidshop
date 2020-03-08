@@ -1,0 +1,24 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee Single View{% endblock title %}
+{% block dashboard_content %}
+<div class="employee-single-view">
+	<div class="card">
+	  <div class="card-body">
+	  	<div class="row">
+	  		<div class="col-md-8 employee-detail">
+	  			<span>{{ employee_object.user.username }}</span><br>
+	  			Onwer: {{ employee_object.owner }}<br>
+	  			Mobile Number: {{ employee_object.mobile_number }}<br>
+	  			Date of birth: {{ employee_object.date_of_birth }}<br>
+	  			Gender: {{ employee_object.gender }}<br>
+	  			Permissions: {{ employee_object.user.get_user_permissions }}
+	  		</div>
+	  		<div class="col-md-4">
+	  			<img src="{{ employee_object.profile_photo.url }}" alt="..." class="img-thumbnail">
+	  		</div>
+	  	</div>
+	  
+	  </div>
+	</div>
+</div>
+{% endblock dashboard_content %}

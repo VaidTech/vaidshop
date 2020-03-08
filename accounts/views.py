@@ -3,12 +3,12 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
 from .forms import UserForm, OwnerRegisterForm, LoginForm
 from owners.models import Owner
 from accounts.models import User 
+from core.custom.others.permissions_data import owner_permission_qs
+from django.urls import reverse
 
-# User = get_user_model()
 
 def owner_register_view(request):
     if request.method == 'POST':
@@ -21,6 +21,8 @@ def owner_register_view(request):
             instance.user.is_owner = True 
             instance.save()
             instance.user.save()
+            user = instance.user 
+            user.user_permissions.set(owner_permission_qs)
             messages.success(request, 'Successfully owner registered.')
             return redirect('accounts:login')
     else:
@@ -35,7 +37,7 @@ def owner_register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("/accounts/dashboard/")
+        return redirect("accounts:dashboard")
     is_login = False
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
@@ -58,21 +60,19 @@ def login_view(request):
         return JsonResponse(json_data)
     return render(request, 'accounts/login.html', context)
 
+
 @login_required()
 def logout_view(request):
     logout(request)
-    return redirect("accounts:login")
+    return reverse("accounts:login")
 
 
-@login_required(login_url="/accounts/login/")
+@login_required()
 def dashboard_view(request):
     return render(request, 'accounts/dashboard.html', {})
     
 
 @login_required()
 def profile_view(request):
-    context = {
-
-    }
+    context = {}
     return render(request, 'accounts/profile.html', context)
-

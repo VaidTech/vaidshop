@@ -1,0 +1,14 @@
+<form action="{% url 'attendences:attendence-delete' attendence_object.id %}" class="attendence-delete-form" method='post'>
+	<div class="modal-header no-bd">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  	<div class="modal-body">
+    	<h2>Are You Confirm To Delete? {{ attendence_object }}</h2>
+  	</div>
+    <div class="modal-footer no-bd">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-outline-danger" >Yes I am Confirm</button>
+    </div>
+</form>

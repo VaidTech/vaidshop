@@ -1,0 +1,19 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee-Permission{% endblock %}
+{% load widget_tweaks %}
+{% block dashboard_content %}
+<div class="employee-perm">
+	<div class="card m-auto" style="width: 33rem;">
+	  <div class="card-body m-auto">
+	  	<h1 style="margin-left:40px;margin-bottom:30px;font-family: 'Courgette', cursive;color: #0392FA;">Employee Permission</h1>
+	  		<form class="employee-permission-form" action="{% url 'permissions:employee-permission' employee_user_id %}" method="post">{% csrf_token %}
+		  		<div class="employee-permissions">
+		  			<label for='employee'>Permissions*</label><br>
+		  			{% render_field employee_permission_form.user_permissions class='form-control employee-permission-multiple-select' %}
+		  		</div>
+		  		<button class="btn btn-outline-danger mt-4" type="submit">Permission Update</button>
+	  		</form>
+	  </div>
+	</div><br>
+</div>
+{% endblock dashboard_content %}

@@ -1,0 +1,29 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Annual Attendence Report {% endblock title %}
+{% block dashboard_content %}
+<div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+		<div class="form-group form-group-default">
+			<form class="chart-year-select-form" action="{% url 'attendences:attendence-chart' %}">
+				<span style="color:grey;">Select Year</span>	
+				<select name="chart_year" class="form-control chart-year-select">
+					<option selected >2020</option>
+					{% for key, value in years.items %}
+						<option value="{{ value }}" 
+						{% if key in request.GET.chart_year %}selected{% endif %}
+						>{{ key }}</option>
+					{% endfor %}
+				</select>
+			</form>	
+		</div>
+	</div>
+	<div class="col-md-6"></div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<canvas id="attendenceChart" width="400" height="200" data-url="{% url 'attendences:attendence-chart' %}"></canvas>
+	</div>
+</div>
+{% endblock dashboard_content %}

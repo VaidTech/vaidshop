@@ -2,22 +2,20 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.core import serializers
 from django.template.loader import render_to_string
-
 from .forms import ShopForm 
 from owners.models import Owner 
 from shops.models import Shop
-from shops.decorators import shop_owner_entry_is_author
+from core.custom.decorator.decorators import shop_creator_entry_is_author
 
 
 def user_is_owner(user):
 	return user.is_owner 
 
-
 @login_required
-@user_passes_test(user_is_owner)
+@permission_required('shops.add_shop', raise_exception=True)
 def shop_create_view(request):
 	data=dict()
 	if request.method == 'POST':
@@ -30,8 +28,14 @@ def shop_create_view(request):
 				return JsonResponse(data)
 			else:
 				shop_instance = shop_form.save(commit=False)
-				owner = Owner.objects.get(user=request.user)
+				user = request.user 
+				if user.is_owner:
+					owner = Owner.objects.get(user=user)
+				else:
+					employee = user.employee 
+					owner = employee.owner
 				shop_instance.owner = owner 
+				shop_instance.creator = user 
 				shop_instance.save()	
 	else:
 		shop_form = ShopForm()
@@ -42,13 +46,13 @@ def shop_create_view(request):
 
 
 @login_required
-@shop_owner_entry_is_author
-@user_passes_test(user_is_owner)
+@shop_creator_entry_is_author
+@permission_required('shops.change_shop', raise_exception=True)
 def shop_update_view(request, id):
 	data = dict()
 	shop_instnace = Shop.objects.get(id=id)
 	if request.method == 'POST':
-		shop_update_form = ShopForm(request.POST, instance=shop_instnace)
+		shop_update_form = ShopForm(request.POST, request.FILES, instance=shop_instnace)
 		if shop_update_form.is_valid():
 			name = shop_update_form.cleaned_data['name']
 			shop_qs = Shop.objects.filter(name__iexact=name).exclude(id=id).exists()
@@ -70,9 +74,19 @@ def shop_update_view(request, id):
 
 
 @login_required
+@permission_required('shops.view_shop', raise_exception=True)
 def shop_list_view(request):
-	owner = Owner.objects.get(user=request.user)
-	shop_qs = owner.shops.all()
+	shop_qs = None 
+	try: 
+		user = request.user 
+		if user.is_owner:
+			owner = Owner.objects.get(user=user)
+		else:
+			employee = user.employee 
+			owner = employee.owner 
+		shop_qs = owner.shops.all()
+	except:
+		pass 
 	shop_form = ShopForm()
 	context = {
 		'shops': shop_qs,
@@ -82,7 +96,7 @@ def shop_list_view(request):
 
 
 @login_required
-@shop_owner_entry_is_author
+@permission_required('shops.view_shop', raise_exception=True)
 def shop_detail_view(request, id):
 	shop_object = Shop.objects.get(id=id) 
 	top4_shop_product = shop_object.products.all()[:4]
@@ -91,8 +105,9 @@ def shop_detail_view(request, id):
 
 
 @login_required
-@user_passes_test(user_is_owner)
-@shop_owner_entry_is_author
+# @user_passes_test(user_is_owner)
+@shop_creator_entry_is_author
+@permission_required('shops.delete_shop', raise_exception=True)
 def shop_delete_view(request, id):
     data = dict()
     is_delete = request.GET.get('delete')
@@ -117,6 +132,7 @@ def shop_delete_view(request, id):
 
 
 @login_required
+@permission_required('shops.view_shop', raise_exception=True)
 def shop_product_list_view(request, id):
 	shop_object = None
 	shop_product = None
@@ -134,12 +150,3 @@ def shop_product_list_view(request, id):
 		"shop_object": shop_object
 	}
 	return render(request, 'products/shop-product-list.html', context)
-
-
-
-
-
-
-
-
-

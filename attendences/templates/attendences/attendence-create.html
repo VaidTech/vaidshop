@@ -1,0 +1,34 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Employee-Attendence{% endblock %}
+{% load widget_tweaks %}
+{% block dashboard_content %}
+<div class="employee-attendence">
+	<div class="card m-auto" style="width: 33rem;">
+	  <div class="card-body m-auto">
+	  	<h1 style="margin-left:40px;margin-bottom:30px;font-family: 'Courgette', cursive;color: #0392FA;">Employee Daily Attendence</h1>
+	  		<form class="employee-attendence-form" action="{% if attendence_object %}{% url 'attendences:attendence-edit' attendence_object.id %}{% else %}{% url 'attendences:attendence-add' %}{% endif %}" method="post">{% csrf_token %}
+	  			{% if request.user.is_owner %}
+		  		<div class="employee-attendence-user">
+		  			<label for='employee'>Select Employee*</label><br>
+		  			{% render_field attendence_form.employee class='form-control attendence-select-employee' %}
+		  		</div><br>
+		  		{% endif %}
+		  		<div class="employee-attendence-day">
+		  			<label for='employee'>Select Date*</label><br>
+		  			{% render_field attendence_form.date class='form-control employee-attendence' id='employee-attendence-date' %}
+		  		</div><br>
+		  		<div class="employee-attendence-day">
+		  			<label for='employee'>Entry Time*</label><br>
+		  			{% render_field attendence_form.entry_time class='form-control employee-attendence' id='employee-entry-time' %}
+		  		</div><br>
+		  		<div class="employee-attendence-day">
+		  			<label for='employee'>Exit Time</label><br>
+		  			{% render_field attendence_form.exit_time class='form-control employee-attendence' id='employee-exit-time' %}
+		  			<small class="">{{ attendence_form.exit_time.help_text }}</small>
+		  		</div><br>
+		  		<button class="btn btn-outline-danger mt-4" type="submit">Attend Confirm</button>
+	  		</form>
+	  </div>
+	</div><br>
+</div>
+{% endblock dashboard_content %}

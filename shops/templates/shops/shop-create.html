@@ -3,8 +3,8 @@
 {% load widget_tweaks %}
 {% block dashboard_content %}
 <div class="shop mt-4 mb-4">
-    <div class="card m-auto" style="width: 28rem;">
-        <div class="card-body ml-5">
+    <div class="card m-auto" style="width: 25rem;">
+        <div class="card-body ml-3 mr-4">
             <h1 class="shop-header mb-5">Shop Create</h1>
             <div class="shop-create-error mb-3" style="color: red;"></div>
             <form action="{% url 'shops:create' %}" method='POST' id="shop-create-form" enctype="multipart/form-data">
@@ -31,15 +31,8 @@
         </div>
       </div>
 </div>
-
 <script type="text/javascript">
     shopCreateUrl = "{% url 'shops:create' %}"
     shopListUrl = "{% url 'shops:list' %}"
 </script>
 {% endblock dashboard_content %}
-
-
-
-
-
-
