@@ -7,6 +7,7 @@ from .forms import UserForm, OwnerRegisterForm, LoginForm
 from owners.models import Owner
 from accounts.models import User 
 from core.custom.others.permissions_data import owner_permission_qs
+from django.urls import reverse
 
 
 def owner_register_view(request):
@@ -63,7 +64,7 @@ def login_view(request):
 @login_required()
 def logout_view(request):
     logout(request)
-    return redirect("accounts:login")
+    return reverse("accounts:login")
 
 
 @login_required()

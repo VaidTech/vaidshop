@@ -741,7 +741,7 @@ body {
 }
 
 .sidebar .nav>.nav-item a p {
-    font-size: 13px;
+    font-size: 12px;
     margin-bottom: 0;
     margin-right: 5px;
     white-space: nowrap;
@@ -797,7 +797,7 @@ body {
 }
 
 .sidebar .nav-collapse li a .sub-item {
-    font-size: 14px;
+    font-size: 11px;
     position: relative;
     margin-left: 25px;
     opacity: .85;

@@ -1,5 +1,5 @@
 $(function(){
-    // employee list 
+    // employee create 
     $("#employee-registered-modal-form").submit(function(event){
         var employeeRegisterForm = $(this)
         var empRMUrl = employeeRegisterForm.attr('action')
@@ -80,8 +80,6 @@ $(function(){
                         document.location.href = empListUrl
                     }, 1500)
                 }
-            },error: function(){
-                console.log("Error")
             }
         })
         event.preventDefault()
