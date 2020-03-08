@@ -9,4 +9,4 @@ class User(AbstractUser):
 
 	class Meta: 
 		managed = False # Ensure Django doesn't "manage" the table 
-		
+		db_table = 'user' # Point to actual DB table
