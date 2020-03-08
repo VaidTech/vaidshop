@@ -7,7 +7,5 @@ class UserAdmin(admin.ModelAdmin):
 	list_display_links = ('id', 'username')
 	list_filter = ('is_owner', 'is_active')
 	search_fields = ('email', 'username', 'id')
-	class Meta:
-		model = User 
-
+	
 admin.site.register(User, UserAdmin)
