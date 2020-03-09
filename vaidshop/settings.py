@@ -92,8 +92,12 @@ WSGI_APPLICATION = 'vaidshop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'dbg'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'vaidshop_db',
+        'USER': 'postgres',
+        'PASSWORD': 'mahmudsajib678',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
