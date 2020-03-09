@@ -14,17 +14,17 @@ def owner_register_view(request):
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         owner_register_form = OwnerRegisterForm(request.POST, request.FILES)
-        # if user_form.is_valid() and owner_register_form.is_valid():
-        #     user_instance = user_form.save()
-        #     instance = owner_register_form.save(commit=False)
-        #     instance.user = user_instance
-        #     instance.user.is_owner = True 
-        #     instance.save()
-        #     instance.user.save()
-        #     user = instance.user 
-        #     user.user_permissions.set(owner_permission_qs)
-        #     messages.success(request, 'Successfully owner registered.')
-        #     return redirect('accounts:login')
+        if user_form.is_valid() and owner_register_form.is_valid():
+            user_instance = user_form.save()
+            instance = owner_register_form.save(commit=False)
+            instance.user = user_instance
+            instance.user.is_owner = True 
+            instance.save()
+            instance.user.save()
+            user = instance.user 
+            user.user_permissions.set(owner_permission_qs)
+            messages.success(request, 'Successfully owner registered.')
+            return redirect('accounts:login')
     else:
         user_form = UserForm()
         owner_register_form = OwnerRegisterForm()
