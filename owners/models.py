@@ -6,7 +6,7 @@ from accounts.models import User
 
 
 class Owner(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     profile_photo = models.ImageField(upload_to='%d-%m-%y', null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
