@@ -8,7 +8,6 @@ from accounts.models import User
 
 class UserForm(UserCreationForm):
     class Meta:
-        model = User
         fields = ('username', 'email', 'password1', 'password2',)
 
 
