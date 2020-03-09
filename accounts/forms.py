@@ -3,11 +3,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from owners.models import Owner
 from employees.models import Employee
-from accounts.models import User 
+from django.contrib.auth import get_user_model
 
+
+User = get_user_model()
 
 class UserForm(UserCreationForm):
     class Meta:
+        model = User
         fields = ('username', 'email', 'password1', 'password2',)
 
 
