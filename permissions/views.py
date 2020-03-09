@@ -4,10 +4,12 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from shops.models import Shop 
-from accounts.models import User 
+from django.contrib.auth import get_user_model 
 from .forms import EmployeePermissionForm
 from owners.models import Owner
 
+
+User = get_user_model()
 
 def user_gains_perms(request, user_id):
 	user = get_object_or_404(User, pk=user_id)

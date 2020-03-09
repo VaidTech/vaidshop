@@ -12,8 +12,9 @@ from .forms import EmployeeForm
 from .models import Employee
 from accounts.forms import UserForm, UserUpdateForm
 from owners.models import Owner
-from accounts.models import User 
+from django.contrib.auth import get_user_model 
 
+User = get_user_model()
 
 def user_is_owner(user):
     return user.is_owner

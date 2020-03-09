@@ -5,11 +5,12 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, OwnerRegisterForm, LoginForm
 from owners.models import Owner
-from accounts.models import User 
+from django.contrib.auth import get_user_model 
 from core.custom.others.permissions_data import owner_permission_qs
 from django.urls import reverse
 
 User = get_user_model()
+
 def owner_register_view(request):
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)

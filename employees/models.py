@@ -1,6 +1,8 @@
 from django.db import models
 from owners.models import Owner
-from accounts.models import User 
+from django.contrib.auth import get_user_model 
+
+User = get_user_model()
 
 
 class Employee(models.Model):

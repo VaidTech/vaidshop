@@ -1,8 +1,9 @@
 from django import forms 
 from employees.models import Employee
-from accounts.models import User
+from django.contrib.auth import get_user_model
 from core.custom.others.permissions_data import employee_permission_qs 
 
+User = get_user_model()
 
 class EmployeePermissionForm(forms.ModelForm):
 	class Meta:

@@ -1,9 +1,10 @@
 from django.db import models
 from django.db.models.signals import pre_save, m2m_changed
-from accounts.models import User 
+from django.contrib.auth import get_user_model 
 from products.models import Product
 from owners.models import Owner 
 
+User = get_user_model()
 
 class Order(models.Model):
 	owner 			= models.ForeignKey(Owner, on_delete=models.CASCADE, null=True)
