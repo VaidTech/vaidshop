@@ -14,7 +14,7 @@ def owner_register_view(request):
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         owner_register_form = OwnerRegisterForm(request.POST, request.FILES)
-        if user_form.is_valid():
+        if owner_register_form.is_valid():
             user_instance = user_form.save()
             instance = owner_register_form.save(commit=False)
             instance.user = user_instance
