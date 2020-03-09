@@ -64,7 +64,7 @@ MIDDLEWARE = [
     # 'core.middleware.middleware.DashboardMiddleWare'
 ]
 
-# AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "accounts.User"
 
 ROOT_URLCONF = 'vaidshop.urls'
 

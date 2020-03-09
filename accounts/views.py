@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from core.custom.others.permissions_data import owner_permission_qs
 from django.urls import reverse
 
+
 User = get_user_model()
 
 def owner_register_view(request):
