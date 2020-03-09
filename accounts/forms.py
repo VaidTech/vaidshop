@@ -1,6 +1,5 @@
 import re
 from django import forms 
-from django.contrib.auth import get_user_model 
 from django.contrib.auth.forms import UserCreationForm
 from owners.models import Owner
 from employees.models import Employee
