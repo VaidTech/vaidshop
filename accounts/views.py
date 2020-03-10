@@ -66,7 +66,7 @@ def login_view(request):
 @login_required()
 def logout_view(request):
     logout(request)
-    return reverse("accounts:login")
+    return redirect("accounts:login")
 
 
 @login_required()
