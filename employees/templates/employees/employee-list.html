@@ -63,7 +63,6 @@
 					<th scope="col">Employee Name</th>
 					<th scope="col">Mobile Number</th>
 		            <th scope="col">Gender</th>
-		            <th scope="col" class="d-none d-md-block">Permission</th>
 		            <th scope="col">Action</th>
 				</tr>
 			</thead>
@@ -74,14 +73,6 @@
 					<td>{{ emp.user.username }}</td>
 					<td>{{ emp.mobile_number }}</td>
 		            <td>{{ emp.gender }}</td>
-		            <td class="d-none d-md-block">
-			            {% for permission in emp.user.get_user_permissions %}
-			            	{{ permission }} <span style="color: red;">{% if not forloop.last %}|{% endif %}</span>
-							{% if forloop.counter|divisibleby:3 %}
-							<br>
-							{% endif %}
-			            {% endfor %}
-		        	</td>
 		            <td> 
 						<button type="button" class="btn btn-link update-employee" data-toggle="modal" data-target="#employeeUpdateModal" data-url="{% url 'employees:update' id=emp.id %}">
 						  <i class="fa fa-edit"></i>
