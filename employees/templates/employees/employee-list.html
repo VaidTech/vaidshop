@@ -21,7 +21,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body ml-4">
+			<div class="modal-body ml-2">
 			<!-- success messages  -->
 			<div id="emp-register-success-msg" ></div>
 			<!-- error messages  -->
@@ -45,7 +45,7 @@
                 </div>
                 <br>
                 <div class="modal-footer no-bd">
-                    <button type="submit" id="addRowButton" class="btn btn-primary">Add</button>
+                    <button type="submit" id="addRowButton" class="btn btn-outline-danger">Register Employee</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -54,44 +54,48 @@
 	</div>
 </div>
 <!-- Employee table  -->
-<table class="table table-bordered table-head-bg-info table-bordered-bd-info" id="employee-table">
-	<thead>
-		<tr>
-			<th scope="col">#</th>
-			<th scope="col">Employee Name</th>
-			<th scope="col">Mobile Number</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Permission</th>
-            <th scope="col">Action</th>
-		</tr>
-	</thead>
-	<tbody>
-			{% for emp in page_obj.object_list %}
-		<tr>
-			<td>{{ emp.id }}</td>
-			<td>{{ emp.user.username }}</td>
-			<td>{{ emp.mobile_number }}</td>
-            <td>{{ emp.gender }}</td>
-            <td>
-            {% for permission in emp.user.get_user_permissions %}
-            	{{ permission }} <span style="color: red;">{% if not forloop.last %}|{% endif %}</span>
-				{% if forloop.counter|divisibleby:3 %}
-				<br>
-				{% endif %}
-            {% endfor %}
-        	</td>
-            <td> 
-				<button type="button" class="btn btn-link update-employee" data-toggle="modal" data-target="#employeeUpdateModal" data-url="{% url 'employees:update' id=emp.id %}">
-				  <i class="fa fa-edit"></i>
-				</button>
-				<button type="button" data-url="{% url 'employees:delete' id=emp.id %}"class="btn btn-link delete-employee" data-toggle="modal" data-target="#employeeDeleteModal">
-  					<i class="fas fa-trash-alt"></i>
-				</button>
-            </td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+<div class="row">
+	<div class="col-xs-8">
+		<table class="table table-bordered table-head-bg-danger table-bordered-bd-info" id="employee-table">
+			<thead>
+				<tr>
+					<th scope="col">S.L</th>
+					<th scope="col">Employee Name</th>
+					<th scope="col">Mobile Number</th>
+		            <th scope="col">Gender</th>
+		            <th scope="col" class="d-none d-md-block">Permission</th>
+		            <th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+					{% for emp in page_obj.object_list %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ emp.user.username }}</td>
+					<td>{{ emp.mobile_number }}</td>
+		            <td>{{ emp.gender }}</td>
+		            <td class="d-none d-md-block">
+			            {% for permission in emp.user.get_user_permissions %}
+			            	{{ permission }} <span style="color: red;">{% if not forloop.last %}|{% endif %}</span>
+							{% if forloop.counter|divisibleby:3 %}
+							<br>
+							{% endif %}
+			            {% endfor %}
+		        	</td>
+		            <td> 
+						<button type="button" class="btn btn-link update-employee" data-toggle="modal" data-target="#employeeUpdateModal" data-url="{% url 'employees:update' id=emp.id %}">
+						  <i class="fa fa-edit"></i>
+						</button>
+						<button type="button" data-url="{% url 'employees:delete' id=emp.id %}"class="btn btn-link delete-employee" data-toggle="modal" data-target="#employeeDeleteModal">
+		  					<i class="fas fa-trash-alt"></i>
+						</button>
+		            </td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
 <!-- Employee Update Modal -->
 <div class="modal fade" id="employeeUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
   <div class="modal-dialog" role="document">

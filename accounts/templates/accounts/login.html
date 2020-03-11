@@ -3,8 +3,7 @@
 {% block title %}SignIn{% endblock title %}
 {% block content %}
 <div class="mt-5">
-    <div class="row">
-        <div class="col-md-4"></div>
+    <div class="row justify-content-center">
         <div class="col-md-4">
            <!-- register success messages  -->
             {% if messages %}
@@ -18,11 +17,10 @@
             {% endfor %}
             {% endif %} 
         </div>
-        <div class="col-md-4"></div>
     </div>
     <!-- login form -->
-    <div class="card m-auto" id="login-section">
-        <div class="card-body ml-4 mr-4">
+    <div class="card m-auto col-md-4" id="login-section">
+        <div class="card-body ml-2">
             <h1 class="signin-header">Sign In</h1>
            <!-- Error message  -->
         <div class="login-error-message"></div>

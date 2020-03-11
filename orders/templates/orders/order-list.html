@@ -2,17 +2,16 @@
 {% block title %}Order List{% endblock title %}
 {% load mathfilters %}
 {% block dashboard_content %}
-<div class="order_list">
-	<table class="table table-bordered table-bordered-bd-warning mt-4">
+{% if order_qs %}
+<div class="order_list mt-3">
+	<h1>Order List</h1>
+	<table class="table table-bordered table-head-bg-success table-bordered-bd-danger">
 	<thead>
 		<tr>
 			<th scope="col">Order Id</th>
 			<th scope="col">Order Provider</th>
 			<th scope="col">Customer Name</th>
-			<th scope="col">Customer Phone</th>
-			<th scope="col">Customer Address</th>
 			<th scope="col">Product List</th>
-			<th scope="col">Amount</th>
 			<th scope="col">Action</th>
 		</tr>
 	</thead>
@@ -21,24 +20,14 @@
 		<tr>
 		<td>{{ forloop.counter }}</td>
 		<td>
-			{{ order.creator }} ({% if order.creator.is_owner %}Owner{% else %}Employee{% endif %})
+			<a href="{% url 'orders:detail' order.id %}">{{ order.creator }}</a> ({% if order.creator.is_owner %}Owner{% else %}Employee{% endif %})
 		</td>
 		<td>{{ order.customer.name }}</td>
-		<td>{{ order.customer.phone_number }}</td>
-		<td>{{ order.customer.address }}</td>
 		<td>
 			{% for order_product in order.order_products.all %}
 				<small>{{ order_product.product }}={{ order_product.quantity }} {{ order_product.product.stock.stock_type }}</small><br>
 			{% empty %}
 				product not found
-			{% endfor %}
-		</td>
-		<td>
-			{% for order_product in order.order_products.all %}
-				<small>{{ order_product.product }}-->{{ order_product.product.price|floatformat }}*{{ order_product.quantity }} {{ order_product.product.stock.stock_type }}={{ order_product.product.price|mul:order_product.quantity|floatformat }} Tk.
-			</small><br>
-			{% empty %}
-				0
 			{% endfor %}
 		</td>
 		<td>
@@ -57,8 +46,6 @@
 			{% endif %}
 		</td>
 		</tr>
-		{% empty %}
-			<p>Order Not Found</p>
 		{% endfor %}
 	</tbody>
 </table>
@@ -70,4 +57,7 @@
     </div>
   </div>
 </div>
+{% else %}
+	<h3 class="text-muted text-center mt-5">Sorry you have not any order</h3>
+{% endif %}
 {% endblock dashboard_content %}

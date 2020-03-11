@@ -1,0 +1,32 @@
+{% extends 'accounts/dashboard.html' %}
+{% block title %}Order Single View{% endblock title %}
+{% block dashboard_content %}
+<div class="card">
+  <div class="card-body">
+  	<div class="order-detail-content">
+	    <h3>Owner.{{ order_obj.owner }}</h3>
+	    Creator: {{ order_obj.creator }}<br>
+	    Customer Name: {{ order_obj.customer.name }}<br>
+	    Customer Address: {{ order_obj.customer.address }}<br>
+	    Customer Phone: {{ order_obj.customer.phone_number }}<br><br>
+	    <h3>Products</h3><hr>
+	    <div class="row">
+	    	{% for product in order_obj.order_products.all %}
+	    	<div class="col-md-3">
+	    		<div class="card m-auto">
+		           <a href="{% url 'products:detail' product.id %}"><img src="{{ product.product.image.url }}" alt="..." class="img-thumbnail"></a> 
+		            <div class="card-body">
+		                <div class="product-list-title text-center">
+		                    <a href="{% url 'products:detail' product.product.id %}"><h2 class="shop-detail-product-list-title text-center">{{ product.product.title }}</h2></a>
+		                    <span>TK. {{ product.product.price|floatformat }}</span>
+		                    <p>Stock. {{ product.product.stock.stock_quantity|floatformat }} {{ product.product.stock.stock_type }}</p>
+		                </div>
+		            </div>
+		        </div>
+	    	</div>
+	    	{% endfor %}
+	    </div>
+    </div>
+  </div>
+</div>
+{% endblock dashboard_content %}

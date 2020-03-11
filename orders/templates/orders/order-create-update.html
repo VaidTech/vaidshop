@@ -3,41 +3,44 @@
 {% block title %}Order Create{% endblock title %}
 {% block dashboard_content %}
 <div class="order-create">
-	<div class="row">
-		<div class="col-md-2"></div>
+	<div class="row justify-content-center">
 		<div class="col-md-6">
-			<div class="order-form">
-				<h1 class="order-form-header">Order Form</h1>
-				<form class="order-create-form" action="{% if order_obj %}{% url 'orders:update' order_obj.id %}{% else %}{% url 'orders:create' %}{% endif %}" method="post">
-					{% csrf_token %}
-					<div class="costomer-name-section">
-						<label for="{{ customer_form.name.label }}">{{ customer_form.name.label }}</label><br>
-						{% render_field customer_form.name class="form-control" placeholder=customer_form.name.label %}
-					</div>
-					<div class="costomer-mobile-section">
-						<label for="{{ customer_form.phone_number.label }}">{{ customer_form.phone_number.label }}</label><br>
-						{% render_field customer_form.phone_number class="form-control" placeholder=customer_form.phone_number.label %}
-					</div>
-						<div class="costomer-address-section">
-						<label for="{{ customer_form.address.label }}">{{ customer_form.address.label }}</label><br>
-						{% render_field customer_form.address class="form-control" placeholder=customer_form.address.label %}
-					</div>
-						<div class="costomer-product-order-section mb-1">
-						<label for="{{ order_form.products.label }}">{{ order_form.products.label }}</label><br>
-						{% render_field order_form.products class="form-control js-example-basic-multiple" placeholder=product_order_form.products.label %}
-					</div>
-					<div class="order-product-quantity">
-						{% if order_obj.products %}
-							{% for order_product in order_obj.order_products.all %}
-								<div id="{{ order_product.product.id }}">
-									<label for="{{ order_product.product.id }}">{{ order_product.product }} quantity: </label>
-									<input type="number" value="{{ order_product.quantity }}" data_product_id="{{ order_product.product.id }}">
-								</div><br>
-							{% endfor %}
-						{% endif %}
-					</div>
-					<button type="submit" class="btn btn-outline-danger">{% if order_obj %}Order Update Confirm{% else %}Order Confirm{% endif %}</button>
-				</form>
+			<div class="card">
+			  <div class="card-body">
+				    <div class="order-form">
+					<h1 class="order-form-header mb-3">Order Form</h1>
+					<form class="order-create-form" action="{% if order_obj %}{% url 'orders:update' order_obj.id %}{% else %}{% url 'orders:create' %}{% endif %}" method="post">
+						{% csrf_token %}
+						<div class="costomer-name-section">
+							<label for="{{ customer_form.name.label }}">{{ customer_form.name.label }}</label><br>
+							{% render_field customer_form.name class="form-control" placeholder=customer_form.name.label %}
+						</div>
+						<div class="costomer-mobile-section">
+							<label for="{{ customer_form.phone_number.label }}">{{ customer_form.phone_number.label }}</label><br>
+							{% render_field customer_form.phone_number class="form-control" placeholder=customer_form.phone_number.label %}
+						</div>
+							<div class="costomer-address-section">
+							<label for="{{ customer_form.address.label }}">{{ customer_form.address.label }}</label><br>
+							{% render_field customer_form.address class="form-control" placeholder=customer_form.address.label %}
+						</div>
+							<div class="costomer-product-order-section mb-1">
+							<label for="{{ order_form.products.label }}">{{ order_form.products.label }}</label><br>
+							{% render_field order_form.products class="form-control js-example-basic-multiple" placeholder=product_order_form.products.label %}
+						</div>
+						<div class="order-product-quantity">
+							{% if order_obj.products %}
+								{% for order_product in order_obj.order_products.all %}
+									<div id="{{ order_product.product.id }}">
+										<label for="{{ order_product.product.id }}">{{ order_product.product }} quantity: </label>
+										<input type="number" value="{{ order_product.quantity }}" data_product_id="{{ order_product.product.id }}">
+									</div><br>
+								{% endfor %}
+							{% endif %}
+						</div>
+						<button type="submit" class="btn btn-outline-danger">{% if order_obj %}Order Update Confirm{% else %}Order Confirm{% endif %}</button>
+					</form>
+				</div>
+			  </div>
 			</div>
 		</div>
 	</div>

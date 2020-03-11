@@ -3,23 +3,10 @@
 {% load widget_tweaks %}
 {% block dashboard_content %}
 <div class="employee-attendence-list">
-	<!-- success messages section  -->
-	<div class="messages">
-	{% if messages %}
-	    {% for message in messages %}
-	        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			    <span aria-hidden="true">&times;</span>
-			  </button>
-			  {{ message }}
-			</div>
-	    {% endfor %}
-	{% endif %}
-	</div>
 	<!-- employee attendence search section  -->
 	<div class="search-form">
 		<form action="{% url 'attendences:attendence-list' %}" >
-		<div class="row">
+		<div class="row justify-content-center">
 			<!-- chose year  -->
 			<div class="col-md-3">
 				<div class="form-group form-group-default">
@@ -71,7 +58,7 @@
 		{% if request.user.is_owner %}
 			{% if request.GET %}
 			<div class="attendence-table-employee-entry">
-				<table class="table table-bordered table-bordered-bd-warning mt-4">
+				<table class="table table-bordered table-bordered-bd-warning mt-3">
 					<thead>
 						<tr>
 							<th scope="col">Id</th>
@@ -79,8 +66,6 @@
 							<th scope="col">Date</th>
 							<th scope="col">Day</th>
 							<th scope="col">Entry Time</th>
-							<th scope="col">Exit Time</th>
-							<th scope="col">Approval Status</th>
 							<th scope="col">Action</th>
 						</tr>
 					</thead>
@@ -110,7 +95,7 @@
 		<div class="row">
 			{% for employee in employee_qs %}
 			<div class="col-md-6 m-auto">
-				<div class="" style="width: 26rem;">
+				<div class="">
 				  <div class="card-body">
 				    <h5 class="card-title">{{ employee }}</h5>
 				    <h6 class="card-subtitle mb-2 text-muted">Last 3 days Attendence</h6>
@@ -119,10 +104,7 @@
 							<tr>
 								<th scope="col">Id</th>
 								<th scope="col">Date</th>
-								<th scope="col">Day</th>
 								<th scope="col">Entry Time</th>
-								<th scope="col">Exit Time</th>
-								<th scope="col">Approval Status</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>

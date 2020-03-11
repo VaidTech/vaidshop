@@ -1,13 +1,15 @@
 {% load widget_tweaks %}
-<div class="shop-update" style="width: 24rem; margin-left: 20px;">
+<div class="shop-update">
     <div class="modal-header no-bd">
-            <h1 id="shop-update-modal-header">Shop Update</h1>
-            <button type="button" style="margin-right: 10px;" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="shop-update-modal-error ml-2" style="color: red;"></div>
-    <form class="shop-update-form mr-4" action="{% url 'shops:update' id=shop.id %}" enctype="multipart/form-data">
+        <span class="fw-light m-auto">
+            <h1 id="create-modal-header">Shop Update</h1>
+        </span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="shop-update-modal-error ml-2" style="color: red;"></div>
+    <form class="shop-update-form mr-2 ml-4" action="{% url 'shops:update' id=shop.id %}" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="shop-update-name-section mb-3">
                 <label for="{{ shop_update_form.name.label }}">{{ shop_update_form.name.label }}</label>

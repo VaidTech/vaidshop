@@ -18,6 +18,7 @@ $(function(){
 	// select2 
 	$('.js-example-basic-multiple').select2({
 		placeholder: 'Click Here And Choose Product',
+		width: 'resolve'
 	}).on('select2:select', function (e) {
     	var data = e.params.data;
     	$(".order-product-quantity").append("<div id='"+data.id+"'>"+"<label for='"+data.id+"'>"+data.text+" quantity: </lable>"+ "<input type='number' value='1' data_product_id='"+data.id+"'/><br><br>"+"</div>")

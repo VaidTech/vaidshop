@@ -167,3 +167,13 @@ def order_delete_view(request, id):
 	    data['html_form'] = render_to_string('orders/order-delete.html', context, request=request)
 	    return JsonResponse(data)
 	return render(request, 'orders/order-delete.html', context)
+
+
+@login_required
+@permission_required('orders.view_order', raise_exception=True)
+def order_detail_view(request, id):
+	order_obj = Order.objects.get(id=id)
+	context = {
+		'order_obj': order_obj
+	}
+	return render(request, 'orders/order-detail.html', context)

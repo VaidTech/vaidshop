@@ -44,10 +44,8 @@ h5, h2{
     box-shadow: 0 0 4px white;
     border: 1px solid #bdbfb9;
 }
-
 /*Registration section */
 #registration-card{
-    width: 40rem;
     background: green;
     color:white;
 }
@@ -68,7 +66,6 @@ h5, h2{
 }
 /*login section */
 #login-section{
-    width: 35rem; 
     background: green; 
     color: white;
 }
@@ -86,27 +83,29 @@ h5, h2{
     font-family: 'Dancing Script', cursive;
     font-size: 35px;
     color: #FF8040;
+    font-weight: 600;
 }
 /*Employee */
 #create-modal-content{
-    width: 50rem;
-    margin-left: -145px;
     background-color: #F4FCFE;
 }
 #create-modal-header{
-    margin-right: -400px;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    color: #FF8040;
+    font-size: 35px;
+}
+#create-employee-header{
     font-family: 'Dancing Script', cursive;
     color: #FF8040;
     font-size: 35px;
 }
 .update-modal-content{
-    width: 43rem;
-    margin-left: -90px;
     margin-top: 60px;
     background: #F4FCFE;
 } 
 #update-modal-header{
-    margin-right: -400px;
+    margin-right: -100px;
     font-family: 'Dancing Script', cursive;
     color: #FF8040;
     font-size: 35px;
@@ -124,7 +123,6 @@ h5, h2{
 .register-errors{
     color: #800000;
 }
-/*employee single view */
 .employee-detail{
     color: grey;
     font-family: 'Sriracha', cursive;
@@ -132,22 +130,17 @@ h5, h2{
 .employee-detail span{
     font-size: 24px;
 }
-
 /*shop */
 .shop-header{
     text-align: center;
-    margin-left: -45px;
     font-family: 'Dancing Script', cursive;
     color: #FF8040;
     font-size: 35px;
 }
 #shop-create-modal-content{
-    width: 400px;
     background-color: #F4FCFE;
-    margin-top: 80px;
-    margin-left: 50px;
+    margin-top: 50px;
 }
-/*shop detail*/
 .shop-detail-title{
    font-size: 20px;
    font-weight: 700;
@@ -171,14 +164,19 @@ h5, h2{
     font-family: 'Sriracha', cursive;
 }
 #shop-update-modal-header{
+    text-align: center;
     font-family: 'Dancing Script', cursive;
-    margin-left: 90px;
-    color: #0392FA;;
+    color: #FF8040;
+    font-size: 35px;
+}
+#shop-update-modal-content{
+    background-color: #F4FCFE;
+    margin-top: 50px;
 }
 /*product */
 .product-create-header{
-    font-family: 'Courgette', cursive;
-    color: #0392FA;
+    font-family: 'Dancing Script', cursive; 
+    color: #FF8040;
     text-align: center;
     margin-left: -45px;
 }
@@ -198,17 +196,29 @@ h5, h2{
     font-family: 'Courgette', cursive;
     font-weight: 500;
 }
-
-/*Order create*/
+/*Order*/
 .order-form-header{
-    font-family: 'Courgette', cursive;
+    font-family: 'Dancing Script', cursive; 
     text-align: center;
-    color: #0392FA;
+    color: #FF8040;
+    font-size: 34px;
 }
 #order-delete-modal-content{
     margin-top: 200px;
 }
-
+.order-detail-content{
+    font-family: 'Courgette', cursive;
+    color: grey;
+}
+.order-detail-content h3{
+    font-family: 'Dancing Script', cursive; 
+    font-size: 35px;
+}
+/*@media (max-width: 400px) {
+  .js-example-basic-multiple{ {
+    width: 200px !important;
+  }
+}*/
 /*Attendence */
 .attendence-select-employee{
     height: 40px;

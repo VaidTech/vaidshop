@@ -2,10 +2,10 @@
 {% block title %}Employee Create{% endblock title %}
 {% load widget_tweaks %}
 {% block dashboard_content %}
-<div class="product mt-4 mb-4">
-    <div class="card m-auto" style="width: 32rem;">
-        <div class="card-body ml-3 mr-5">
-            <h1 class="product-create-header mb-5">Add Product To Shop</h1>
+<div class="product mt-3">
+    <div class="card m-auto col-md-6">
+        <div class="card-body ml-3">
+            <h1 class="product-create-header mb-4">Add Product To Shop</h1>
             <div class="product-create-error mb-3" style="color: red;"></div>
             <form action="{% url 'products:create' %}" method='POST' id="product-add-form" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -39,7 +39,7 @@
                     {% render_field product_form.image class="form-control product-image" %}
                 </div>
                 <br>
-                <button type="submit" class="btn btn-outline-warning product-add-btn">Add</button>
+                <button type="submit" class="btn btn-outline-warning product-add-btn">Add Product</button>
             </form>
         </div>
       </div>

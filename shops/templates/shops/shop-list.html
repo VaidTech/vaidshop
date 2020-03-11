@@ -13,7 +13,7 @@
 <!-- shop create modal form  -->
 <div class="modal fade" id="shopCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content col-md-12" id="shop-create-modal-content">
+		<div class="modal-content col-md-12 col-sm-4" id="shop-create-modal-content">
 			<div class="modal-header no-bd">
                 <span class="fw-light m-auto">
                     <h1 id="create-modal-header">Shop Create</h1>
@@ -53,7 +53,7 @@
 {% if perms.shops.view_shop %}
 <!-- shop list  -->
 <div class="shop-list">
-	<div class="row">
+	<div class="row justify-content-around">
 		{% for shop in shops %}
 		<div class="col-md-4 col-lg-4 col-sm-5 col-xs-3 mb-4">
 			<div class="card m-auto" style="width: 14rem;">

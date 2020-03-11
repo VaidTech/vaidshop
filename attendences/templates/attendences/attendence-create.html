@@ -2,10 +2,10 @@
 {% block title %}Employee-Attendence{% endblock %}
 {% load widget_tweaks %}
 {% block dashboard_content %}
-<div class="employee-attendence">
-	<div class="card m-auto" style="width: 33rem;">
-	  <div class="card-body m-auto">
-	  	<h1 style="margin-left:40px;margin-bottom:30px;font-family: 'Courgette', cursive;color: #0392FA;">Employee Daily Attendence</h1>
+<div class="employee-attendence mt-3">
+	<div class="card m-auto col-md-6">
+	  <div class="card-body ml-2">
+	  	<h1>Employee Daily Attendence</h1>
 	  		<form class="employee-attendence-form" action="{% if attendence_object %}{% url 'attendences:attendence-edit' attendence_object.id %}{% else %}{% url 'attendences:attendence-add' %}{% endif %}" method="post">{% csrf_token %}
 	  			{% if request.user.is_owner %}
 		  		<div class="employee-attendence-user">

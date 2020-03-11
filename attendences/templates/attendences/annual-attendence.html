@@ -1,8 +1,7 @@
 {% extends 'accounts/dashboard.html' %}
 {% block title %}Annual Attendence Report {% endblock title %}
 {% block dashboard_content %}
-<div class="row">
-	<div class="col-md-4"></div>
+<div class="row justify-content-center">
 	<div class="col-md-4">
 		<div class="form-group form-group-default">
 			<form class="chart-year-select-form" action="{% url 'attendences:attendence-chart' %}">
@@ -18,12 +17,10 @@
 			</form>	
 		</div>
 	</div>
-	<div class="col-md-6"></div>
 </div>
-
-<div class="row">
-	<div class="col-md-12">
-		<canvas id="attendenceChart" width="400" height="200" data-url="{% url 'attendences:attendence-chart' %}"></canvas>
+<div class="row justify-content-center">
+	<div class="col-md-12 ">
+		<canvas id="attendenceChart" width="400" height="400" data-url="{% url 'attendences:attendence-chart' %}"></canvas>
 	</div>
 </div>
 {% endblock dashboard_content %}

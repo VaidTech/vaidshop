@@ -1,22 +1,27 @@
 {% extends 'accounts/dashboard.html' %}
 {% block title %}Detail{% endblock title %}
 {% block dashboard_content %}
-<div class="product-detail mt-5">
-	<a href="{% url 'shops:detail' product.shop.id %}" class="btn btn-outline-danger">Go Back To Shop</a>
-	<div class="card m-auto" style="width: 35rem;">
-		<div class="card-body">
-			<div class="row">
-				<div class="col-md-7 product-detail">
-					<h2 class="product-detail-title">{{ product.title }}</h2>
-					<span class="product-detail-price">Tk. {{ product.price|floatformat }} (per {{ product.stock.stock_type }})</span> <br>
-					<span class="product-detail-stock">Stock. {{ product.stock.stock_quantity|floatformat }} {{ product.stock.stock_type }}</span><br>
-					<span class="product-detail-shop">Shop. {{ product.shop.name }}</span><br><br>
-					<small class="product-detial-description">{{ product.description|safe }}</small>
-				</div>
-				<div class="col-md-5">
-					{% if product.image %}
-					<img src="{{ product.image.url }}" alt="..." class="img-thumbnail" style="height: 260px;">
-					{% endif %}
+<div class="product-detail">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<!-- badge -->
+		<a href="{% url 'shops:detail' product.shop.id %}" class="badge badge-count mb-2">Back to {{ product.shop }}</a>
+			<div class="card m-auto">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-7 product-detail">
+							<h2 class="product-detail-title">{{ product.title }}</h2>
+							<span class="product-detail-price">Tk. {{ product.price|floatformat }} (per {{ product.stock.stock_type }})</span> <br>
+							<span class="product-detail-stock">Stock. {{ product.stock.stock_quantity|floatformat }} {{ product.stock.stock_type }}</span><br>
+							<span class="product-detail-shop">Shop. {{ product.shop.name }}</span><br><br>
+							<small class="product-detial-description">{{ product.description|safe }}</small>
+						</div>
+						<div class="col-md-5">
+							{% if product.image %}
+							<img src="{{ product.image.url }}" alt="..." class="img-thumbnail">
+							{% endif %}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

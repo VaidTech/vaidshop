@@ -25,7 +25,7 @@ class Stock(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return str(f"{self.stock_type.name}")
+        return f"{self.stock_type}"
 
     def clean(self, *args, **kwargs):
         data = super().clean(*args, **kwargs)
